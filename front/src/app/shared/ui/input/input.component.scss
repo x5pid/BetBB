@@ -1,0 +1,102 @@
+@use '../../../../styles/abstracts/mixins' as *;
+
+// Input
+$input-variants: (
+  primary: (
+    focus: (
+      border-color: var(--primary-hover),
+      box-shadow: 0 0 0 3px var(--primary-box),
+    )
+  ),
+  secondary: (
+    focus: (
+      border-color: var(--secondary-hover),
+      box-shadow: 0 0 0 3px var(--secondary-box),
+    )
+  ),
+  success: (
+    focus: (
+      border-color: var(--success-hover),
+      box-shadow: 0 0 0 3px var(--success-box),
+    )
+  ),
+  warning: (
+    focus: (
+      border-color: var(--warning-hover),
+      box-shadow: 0 0 0 3px var(--warning-box),
+    )
+  ),
+  error: (
+    border-color: var(--danger-hover),
+    focus: (
+      border-color: var(--danger-hover),
+      box-shadow: 0 0 0 3px var(--danger-box),
+    )
+  ),
+);
+
+.input {
+  display: flex;
+  flex-direction: column;
+
+  &__label {
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+    font-weight: 500;
+  }
+
+  &__field {
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    border: 1px solid #d0d7de;
+    border-radius: 4px;
+    &:focus {
+      outline: none;
+    }
+  }
+
+  // Variants (primary, secondary, etc.)
+  @each $variant, $styles in $input-variants {
+    &--#{$variant} {
+      .input__field {
+        @include apply-styles($styles);
+      }
+    }
+  }
+
+  &--disabled {
+    opacity: 0.6;
+    .input__field {
+      cursor: not-allowed;
+      background-color: var(--input-disabled);
+    }
+  }
+
+  &--error {
+    .input
+    {
+      &__label {
+        color: var(--danger);
+      }
+      &__error {
+        color: var(--danger);
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+
+        .mat-icon {
+          width: 15px;
+          height: 15px;
+          font-size: 15px;
+          margin-right: 2px;
+        }
+      }
+      &__info {
+        color: var(--text-muted);
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+}

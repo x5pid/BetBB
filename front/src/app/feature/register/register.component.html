@@ -1,0 +1,39 @@
+<div class="register">
+  @if(!success()){
+    <ui-card variant="elevated" size="lg" class="register__box">
+      <h4 class="register__title">Get started with BetBaby</h4>
+      <ui-form [formGroup]="form" (formSubmit)="onSubmit()" class="register__form">
+          <div form-fields class="register__field">
+            <!-- EMAIL -->
+            <ui-input  label="Email" type="email" formControlName="email" variant="primary"
+              [errorMessage]="emailErrorMessage()">
+            </ui-input>
+            <!-- PASSWORD -->
+            <ui-input label="Password" type="password" formControlName="password" variant="primary"
+              [errorMessage]="passwordErrorMessage()" [infoMessage]="passordInfo">
+            </ui-input>
+            <!-- USERNAME -->
+            <ui-input  label="Username" type="text" formControlName="username" variant="primary"
+              [errorMessage]="usernameErrorMessage()" [infoMessage]="usernameInfo">
+            </ui-input>
+          </div>
+          <div form-actions>
+            <ui-button class="register__button"  type="submit" variant="primary" label="Email address">
+              {{ isSubmitted() ? 'Create...' : 'Create account' }}
+            </ui-button>
+          </div>
+        </ui-form>
+      <p class="register__signin">
+        Already have an account?
+        <a routerLink="/login" class="register__link">Sign in</a>
+      </p>
+    </ui-card>
+  }
+  @else {
+    <ui-card variant="elevated" size="lg" >
+      <h2>Account valide !</h2>
+      <p>Redirecting in {{ countdown() }} seconds...</p>
+    </ui-card>
+  }
+</div>
+

@@ -1,0 +1,56 @@
+<main class="card bet-stat">
+  <div class="stats">
+    <div class="stat">
+      <div class="small">Répartition</div>
+      <div class="distribution">
+        <div class="distribution-item">
+          <div class="distribution-header">
+            <div class="small">Garçon</div>
+            <div id="pct-boy">50%</div>
+          </div>
+          <div class="progress-wrapper">
+            <div id="bar-boy" class="progress" style="width:50%"></div>
+          </div>
+        </div>
+        <div class="spacer"></div>
+        <div class="distribution-item">
+          <div class="distribution-header">
+            <div class="small">Fille</div>
+            <div id="pct-girl">50%</div>
+          </div>
+          <div class="progress-wrapper">
+            <div id="bar-girl" class="progress" style="width:50%;background:linear-gradient(90deg,#ffb7d0,#ffd6e6)"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat">
+      <div class="small">Mises totales</div>
+      <div class="value" id="total-stakes">0</div>
+    </div>
+
+    <div class="stat">
+      <div class="small">Dernier pari</div>
+      <div class="value" id="last-bet">—</div>
+    </div>
+
+    <div class="stat">
+      <div class="small">Vos gains potentiels cumulés</div>
+      <div class="value" id="user-total-gains">0</div>
+    </div>
+  </div>
+
+  <div class="chart">
+    <canvas id="oddsChart"></canvas>
+  </div>
+
+  <div class="chart-controls">
+    <div class="small">Historique des cotes (temps réel).</div>
+    <div>
+      <button id="reset">Réinitialiser</button>
+    </div>
+  </div>
+
+  <footer class="small">Fichier autonome — modifiez les objets, règles ou calculs dans la section &lt;script&gt;.</footer>
+</main>

@@ -1,0 +1,33 @@
+<label [class]="classes()">
+  @if(label){
+    <span class="input__label">{{ label }}</span>
+  } @else {
+    <ng-content select="[input__label]"></ng-content>
+  }
+
+  <input
+    [type]="type"
+    [disabled]="disabledInput()"
+    [value]="value"
+    (input)="onInput($event)"
+    (blur)="onTouched()"
+    class="input__field"
+  />
+  @if(isErroMsg()){
+    <div class="input__error">
+        <mat-icon>warning</mat-icon>
+        <span>{{errorMsg()}}</span>
+    </div>
+  }@else {
+    @if(err()){
+      <ng-content select=".input__error"></ng-content>
+    }
+  }
+  @if(isInfoMsg()){
+    <div class="input__info">
+      <span>{{infoMsg()}}</span>
+    </div>
+  }@else {
+    <ng-content select=".input__info"></ng-content>
+  }
+</label>

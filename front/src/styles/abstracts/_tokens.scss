@@ -1,0 +1,44 @@
+@use 'sass:color';
+
+$theme-light: (
+  background: #fafafa,
+  background-component: #fff,
+
+  text: #334155,
+  text-ligth: #fff,
+  text-muted: #57606a,//#94a3b8,
+  text-link: #3b82f6,
+  border: #d0d7de,
+
+  primary: #334155,//#293545,
+  primary-hover: color.adjust(#334155, $lightness: +5%),
+  // primary-box: color.adjust(#334155, $lightness: +68%),
+
+  secondary: #64748b,
+  secondary-hover: #475569,
+  secondary-box: color.adjust(#64748b, $lightness: +20%),
+
+  success: #10b981,
+  success-hover: #059669,
+  success-box: color.adjust(#10b981, $lightness: +20%),
+
+  warning: #edcb70,
+  warning-hover: color.adjust(#edcb70, $lightness: -10%),
+  warning-box: color.adjust(#edcb70, $lightness: +20%),
+
+  danger: #cf222e,
+  danger-hover: #dc2626,
+  danger-box: color.adjust(#cf222e, $lightness: +20%),
+
+  input-disabled:rgb(229 229 227),
+
+);
+
+$theme-dark: (
+  primary: #375a7f,
+  primary-hover: color.adjust(#375a7f, $lightness: -10%),
+  secondary: #444,
+  secondary-hover: color.adjust(#444, $lightness: -10%),
+  background: #1c1c1c,
+  text: #f8f9fa
+);

@@ -1,0 +1,26 @@
+@use 'sass:map';
+@use 'sass:meta';
+@use 'sass:list';
+
+// Fonctions SCSS
+@function rem($px) {
+  @return $px / 16 * 1rem;
+}
+
+@function spacing($factor) {
+  @return $factor * 8px;
+}
+
+// New Version Dart Sass 3.0.0
+@function get($map, $key) {
+  @return map.get($map, $key);
+}
+@function has-key($map, $key) {
+  @return map.has-key($map, $key);
+}
+@function type-of($var) {
+  @return meta.type-of($var);
+}
+@function index-of($list, $value) {
+  @return list.index($list, $value);
+}

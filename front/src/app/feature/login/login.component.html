@@ -1,0 +1,28 @@
+<div class="login">
+    <ui-card variant="elevated" size="lg" class="login__card">
+      <h2 class="login__title">Sign in</h2>
+      @if(error(); as msgerror){
+        <ui-message infoMessage="msgerror"></ui-message>
+      }
+      <ui-form [formGroup]="form" (submit)="onSubmit()" class="login__form">
+        <div form-fields class="login__fields">
+          <ui-input  label="Email" type="email" formControlName="email" variant="primary"></ui-input>
+          <ui-input type="password" formControlName="password" variant="primary">
+            <div input__label class="login__label-row">
+              <label for="password" class="login__label">Password</label>
+              <a routerLink="/forgot-password" class="login__link login__link--small">Forgot?</a>
+            </div>
+          </ui-input>
+        </div>
+        <div form-actions>
+          <ui-button class="login__button"  type="submit" variant="primary" label="Email address" [disabled]="isSubmitted()">
+            {{ isSubmitted() ? 'Sign...' : 'Sign In' }}
+          </ui-button>
+        </div>
+      </ui-form>
+      <p class="login__signup">
+        Don't have an account?
+        <a href="/register" class="login__signup-link">Sign up, it's free!</a>
+      </p>
+    </ui-card>
+</div>

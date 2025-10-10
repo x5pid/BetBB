@@ -1,0 +1,96 @@
+@use '../../../../styles/abstracts/mixins' as *;
+
+// Button
+$btn-variants: (
+  primary: (
+    background-color: var(--primary),
+    hover: (
+      background-color: var(--primary-hover),
+    ),
+    focus: (
+      outline: 2px solid var(--primary),
+    )
+  ),
+  secondary: (
+    background-color: var(--primary),
+    hover: (
+      background-color: var(--primary-hover),
+    ),
+    focus: (
+      outline: 2px solid var(--primary),
+    )
+  ),
+  success: (
+    background-color: var(--success),
+    hover: (
+      background-color: var(--success-hover),
+    ),
+    focus: (
+      outline: 2px solid var(--success),
+    )
+  ),
+  warning: (
+    background-color: var(--warning),
+    hover: (
+      background-color: var(--warning-hover),
+    ),
+    focus: (
+      outline: 2px solid var(--warning),
+    )
+  ),
+  danger: (
+    background-color: var(--danger),
+    hover: (
+      background-color: var(--danger-hover),
+    ),
+    focus: (
+      outline: 2px solid var(--danger),
+    )
+  ),
+);
+
+$btn-sizes: (
+  sm: (
+    padding: 0.25rem 0.5rem,
+    font-size: 0.875rem
+  ),
+  md: (
+    padding: 0.75rem,
+    font-size: 1rem
+  ),
+  lg: (
+    padding: 0.75rem 1.5rem,
+    font-size: 1.125rem
+  )
+);
+
+.btn {
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  color: var(--text-ligth);
+  width: 100%;
+
+  // Variants (primary, secondary, etc.)
+  @each $variant, $styles in $btn-variants {
+    &--#{$variant} {
+      @include apply-styles($styles);
+    }
+  }
+
+  // Sizes (sm, md, lg)
+  @each $size, $size-styles in $btn-sizes {
+    &--#{$size} {
+      @include apply-styles($size-styles);
+    }
+  }
+  &:focus {
+      outline-offset: 2px
+  }
+
+  &--disabled {
+    cursor: not-allowed;
+  }
+}

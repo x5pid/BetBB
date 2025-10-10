@@ -1,0 +1,58 @@
+<aside class="bet-form">
+  <header>
+    <div class="logo">👶</div>
+    <div>
+      <h1>Pariez : Garçon ou Fille</h1>
+      <p class="lead">Pari symbolique.</p>
+    </div>
+  </header>
+
+  <div class="options">
+    <div class="option" id="opt-boy">
+      <div class="icon" style="background:linear-gradient(135deg,#d6f0ff,#cfe9ff)">🍼</div>
+      <div class="meta">
+        <div>Garçon</div>
+        <div class="small">Mises totales : <span id="total-boy">{{ totalBoy() }}</span></div>
+      </div>
+      <div class="odds" id="odds-boy">{{ oddsBoy() | number:'1.2-2' }}x</div>
+    </div>
+
+    <div class="option" id="opt-girl">
+      <div class="icon" style="background:linear-gradient(135deg,#ffd6e6,#ffdcec)">🧸</div>
+      <div class="meta">
+        <div>Fille</div>
+        <div class="small">Mises totales : <span id="total-girl">{{ totalGirl() }}</span></div>
+      </div>
+      <div class="odds" id="odds-girl">{{ oddsGirl() | number:'1.2-2' }}x</div>
+    </div>
+  </div>
+
+  <form id="betForm" (ngSubmit)="onSubmit($event)">
+    <label class="label">Choisir un objet symbolique</label>
+    <select id="symbol" aria-label="Objet symbolique">
+      <option value="couche">🧻 Couche</option>
+      <option value="sucette">🧸 Sucette</option>
+      <option value="biberon">🍼 Biberon</option>
+      <option value="jouet">🧩 Jouet</option>
+    </select>
+
+    <div class="row">
+      <select id="choice" (change)="onChoiceChange($event)">
+        <option value="boy">Garçon</option>
+        <option value="girl">Fille</option>
+      </select>
+      <input type="number" id="stake" min="1" value="5" (input)="onStakeChange($event)" />
+    </div>
+
+    <div class="row">
+      <div class="summary">
+        <div class="small">Gain potentiel :</div>
+        <div id="potential">{{ (potential())  ?? '—'}}</div>
+         <div class="small">Total des gains :</div>
+        <div id="user-stake">{{ (userTotal())  ?? '—'}}</div>
+      </div>
+      <button class="animation-zone" appCoinDrop [count]="10" [launch]="true" [jarId]="'svgpig'">Parier</button>
+    </div>
+  </form>
+
+</aside>

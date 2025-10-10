@@ -1,0 +1,63 @@
+@use './functions' as *;
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin text-truncate {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@mixin responsive($property, $small, $medium, $large) {
+  #{$property}: $small;
+
+  @media (min-width: 768px) {
+    #{$property}: $medium;
+  }
+
+  @media (min-width: 1024px) {
+    #{$property}: $large;
+  }
+}
+
+@mixin apply-styles($styles) {
+  @if type-of($styles) == 'map' {
+    // 1. Propriétés normales
+    & {
+      @each $prop, $val in $styles {
+        @if not index-of(('hover', 'focus', 'disabled', 'active'), $prop) {
+          #{$prop}: #{$val};
+        }
+      }
+    }
+
+
+    // 2. Pseudo-classes
+    @each $pseudo in ('hover', 'focus', 'disabled', 'active') {
+      @if has-key($styles, $pseudo) {
+        $pseudo-styles: get($styles, $pseudo);
+        @if type-of($pseudo-styles) == 'map' {
+          @at-root {
+            #{&}:#{ $pseudo } {
+              @include apply-styles($pseudo-styles);
+            }
+          }
+        }
+      }
+    }
+
+  } @else {
+    @warn "apply-styles() attend une map, reçu #{type-of($styles)}.";
+  }
+}
+
+@mixin define-theme($theme-map) {
+  @each $key, $value in $theme-map {
+    --#{$key}: #{$value};
+  }
+}
+

@@ -1,0 +1,79 @@
+
+// Styles pour le composant bet-stat
+.bet-stat {
+  // @include flex-column;
+  gap: 12px;
+
+  .stats {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  // .stat {
+  //   @include stat-card;
+  // }
+
+  .value {
+    font-weight: 700;
+    font-size: 20px;
+  }
+
+  .distribution {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .distribution-item {
+    flex: 1;
+  }
+
+  .distribution-header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .spacer {
+    width: 10px;
+  }
+
+  // .progress-wrapper {
+  //   @include progress-bar;
+  // }
+
+  .progress {
+    height: 16px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--blue), var(--pink));
+    width: 50%;
+  }
+
+  .chart {
+    height: 260px;
+
+    canvas {
+      max-height: 300px;
+    }
+  }
+
+  .chart-controls {
+    margin-top: 12px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  // button {
+  //   @include button-primary;
+  // }
+
+  footer {
+    text-align: center;
+    margin-top: 10px;
+  }
+}

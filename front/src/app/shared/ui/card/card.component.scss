@@ -1,0 +1,47 @@
+@use '../../../../styles/abstracts/mixins' as *;
+
+// Card
+$card-variants: (
+  flat: (
+    border:none,
+    box-shadow: none,
+  ),
+  elevated: (
+    background-color: var(--background-component),
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2),
+  ),
+  outlined:(
+    border: 1px solid var(--border),
+  )
+);
+
+$card-sizes: (
+  sm: (
+    padding: 0.5rem,
+  ),
+  md: (
+    padding: 1rem,
+  ),
+  lg: (
+    padding: 2rem,
+  )
+);
+
+.card {
+  display: block;
+  padding: 2rem;
+  border-radius: 8px;
+
+  @each $variant, $styles in $card-variants {
+    &--#{$variant} {
+      @include apply-styles($styles);
+    }
+  }
+
+  // Sizes (sm, md, lg)
+  @each $size, $size-styles in $card-sizes {
+    &--#{$size} {
+      @include apply-styles($size-styles);
+    }
+  }
+}
