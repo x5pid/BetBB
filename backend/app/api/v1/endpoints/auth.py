@@ -12,16 +12,19 @@ from fastapi import Body
 from fastapi import Response
 from fastapi import Request
 
+from app.services.validation import validate_email_logic, validate_password_logic, validate_username_logic
+from app.crud.exceptions import ValidationError
+
 router = APIRouter()
 
 @router.post("/register", status_code=status.HTTP_201_CREATED)
 def register(user_data: RegisterUser, db: Session = Depends(get_db)):
-    email_normalized = user_data.email.lower()
-    
-    user = db.query(User).filter(User.email == email_normalized).first()
-    if user:
-        raise HTTPException(status_code=400, detail="Email already registered")
 
+    #Vérification
+    validate_email_logic(user_data.email,db)
+    validate_password_logic(user_data.password)
+    validate_username_logic(user_data.username,db)
+    
     hashed = get_password_hash(user_data.password)
     new_user = User(
         email=user_data.email,
@@ -41,9 +44,12 @@ def register(user_data: RegisterUser, db: Session = Depends(get_db)):
 
 @router.post("/login", response_model=TokenResponse)
 def login(response: Response,form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+    
     user = db.query(User).filter(User.email == form_data.username).first()
+
     if not user or not verify_password(form_data.password, user.hashed_password):
-        raise HTTPException(status_code=401, detail="Invalid credentials")
+        raise HTTPException(status_code=401, detail="Incorrect username or password.")
+        #raise ValidationError(field="login",message="Incorrect username or password.", status_code=status.HTTP_401_UNAUTHORIZED)
 
     access_token_data = create_access_token({"sub": user.email})
     refresh_token_data = create_refresh_token({"sub": user.email})

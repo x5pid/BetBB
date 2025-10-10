@@ -3,14 +3,15 @@ from fastapi import Request, status
 from fastapi.exceptions import RequestValidationError
 
 class ValidationError(Exception):
-    def __init__(self, field: str, message: str):
+    def __init__(self, field: str, message: str, status_code: int = status.HTTP_422_UNPROCESSABLE_ENTITY):
         self.field = field
-        self.message = message
+        self.message = message        
+        self.status_code = status_code
 
 
 async def validation_exception_handler(request: Request, exc: ValidationError):
     return JSONResponse(
-        status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        status_code=exc.status_code,
         content={
             "errors": {
                 exc.field: exc.message
