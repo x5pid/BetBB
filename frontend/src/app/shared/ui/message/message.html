@@ -1,9 +1,11 @@
-@if(isInfoMsg()){
-  <div>
-    <div>
+@if(showMessage()){
+  <div class="card">
+    <div class="card_msg">
       <span>{{infoMsg()}}</span>
     </div>
-    <button></button>
+    <button (click)="deleteMessage()" class="card-close">
+      <mat-icon>close</mat-icon>
+    </button>
   </div>
 }
 

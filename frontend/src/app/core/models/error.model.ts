@@ -1,3 +1,21 @@
+import { HttpErrorResponse } from "@angular/common/http";
+
+export class ErrorResponse {
+  private readonly _detail: string;
+
+  constructor(detail : string){
+    this._detail = detail;
+  }
+
+  get detail(): string {
+    return this._detail;
+  }
+
+  static fromError(err: HttpErrorResponse): ErrorResponse {
+    const error = err.error as {detail:string};
+    return new ErrorResponse(error?.detail ?? 'Erreur inconnue');
+  }
+}
 
 export interface ApiError {
   detail: ApiFieldError[];

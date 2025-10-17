@@ -12,6 +12,10 @@
     (input)="onInput($event)"
     (blur)="onTouched()"
     class="input__field"
+    [ui-tooltip]="tooltip"
+    [tooltipPosition]="tooltipPosition"
+    [tooltipVisible]="tooltipVisible"
+    #viewInput
   />
   @if(isErroMsg()){
     <div class="input__error">

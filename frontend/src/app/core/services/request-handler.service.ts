@@ -1,10 +1,11 @@
 import { Injectable, signal, Signal } from '@angular/core';
 import { Observable, catchError, finalize, throwError } from 'rxjs';
-import { ApiError, ApiErrorResponse } from '../models/error.model';
+import { ErrorResponse } from '../models/error.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 export interface RequestState<T> {
   loading: Signal<boolean>;
-  error: Signal<ApiErrorResponse | null>;
+  error: Signal<ErrorResponse | null>;
   data: Signal<T | null>;
 }
 
@@ -14,7 +15,7 @@ export class RequestHandlerService {
   createRequestState<T>()
   {
     const loading = signal(false);
-    const error = signal<ApiErrorResponse | null>(null);
+    const error = signal<string | null>(null);
     const data = signal<T | null>(null);
     const success = signal(false);
 
@@ -22,7 +23,7 @@ export class RequestHandlerService {
       obs$: Observable<T>,
       options?: {
         onSuccess?: (res: T) => void;
-        onError?: (err: ApiErrorResponse) => ApiErrorResponse | null;
+        onError?: (err: ErrorResponse) => ErrorResponse | null;
       }
     ) {
       success.set(false);
@@ -31,10 +32,10 @@ export class RequestHandlerService {
 
       obs$
         .pipe(
-          catchError((err: any) => {
-            const apiError = ApiErrorResponse.fromError(err?.error);
-            const msg = options?.onError?.(apiError) ??  apiError;
-            error.set(msg);
+          catchError((err: HttpErrorResponse) => {
+            const errorReponse = ErrorResponse.fromError(err)
+            const msg = options?.onError?.(errorReponse) ??  errorReponse;
+            error.set(msg.detail);
             return throwError(() => err);
           }),
           finalize(() => loading.set(false))

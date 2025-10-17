@@ -34,3 +34,64 @@ body {
   font: var(--mat-sys-body-medium);
   margin: 0;
 }
+
+.tooltip {
+  position: absolute;
+  padding: 6px 10px;
+  background: #333;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 1000;
+  transition: opacity 0.2s;
+  pointer-events: none;
+
+  &::after {
+    content: '';
+    position: absolute;
+    border: 6px solid transparent;
+  }
+}
+
+.tooltip-top {
+  margin-top: -6px;
+  &::after {
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-top-color: #333;
+  }
+}
+
+.tooltip-bottom{
+  margin-top: 6px;
+  &::after {
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-bottom-color: #333;
+  }
+}
+
+.tooltip-left{
+  margin-left: -6px;
+  &::after {
+    right: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-left-color: #333;
+  }
+}
+
+.tooltip-right{
+  margin-left: 6px;
+  &::after {
+    left: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-right-color: #333;
+  }
+}
+
+

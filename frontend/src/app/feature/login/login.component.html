@@ -1,13 +1,15 @@
 <div class="login">
     <ui-card variant="elevated" size="lg" class="login__card">
       <h2 class="login__title">Sign in</h2>
-      @if(error(); as msgerror){
-        <ui-message infoMessage="msgerror"></ui-message>
+      @if(isError()){
+        <ui-message [infoMessage]="error()"></ui-message>
       }
       <ui-form [formGroup]="form" (submit)="onSubmit()" class="login__form">
         <div form-fields class="login__fields">
-          <ui-input  label="Email" type="email" formControlName="email" variant="primary"></ui-input>
-          <ui-input type="password" formControlName="password" variant="primary">
+          <ui-input  label="Email" type="email" formControlName="email" variant="primary"
+            [tooltip]="msgMiss" [tooltipVisible]="msgEmptyEmail()" [focusTrigger]="focusEmail$" (valueChanged)="onEmailChange($event)" (blur)="onEmailBlur()" ></ui-input>
+          <ui-input type="password" formControlName="password" variant="primary"
+            [tooltip]="msgMiss" [tooltipVisible]="msgEmptyPassword()" (valueChanged)="onPasswordChange($event)" [focusTrigger]="focusPassword$">
             <div input__label class="login__label-row">
               <label for="password" class="login__label">Password</label>
               <a routerLink="/forgot-password" class="login__link login__link--small">Forgot?</a>

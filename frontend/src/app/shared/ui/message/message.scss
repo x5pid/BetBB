@@ -1,0 +1,18 @@
+.card {
+  border: solid 1px var(--danger-light);
+  border-radius: 5px;
+  padding: 0.75rem 1rem ;
+  align-items: center;
+  display: flex;
+  background-color: var(--danger-box-light);
+  margin-bottom: 1rem;
+  &_msg {
+    flex-grow: 1;
+    text-align: center;
+  }
+  &-close{
+    border: none;
+    background: none;
+    color: var(--danger);
+  }
+}

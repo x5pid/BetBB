@@ -1,11 +1,14 @@
-import { Component, computed, EventEmitter, forwardRef, input, Input, Output, Signal, signal } from '@angular/core';
+import { Component, computed, effect, ElementRef, EventEmitter, forwardRef, input, Input, OnDestroy, OnInit, Output, Signal, signal, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
+import { TooltipDirective } from '../tooltip/tooltip';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'ui-input',
   imports: [
-    MatIcon
+    MatIcon,
+    TooltipDirective
   ],
   providers: [
     {
@@ -17,7 +20,7 @@ import { MatIcon } from '@angular/material/icon';
   templateUrl: './input.component.html',
   styleUrl: './input.component.scss',
 })
-export class InputComponent implements ControlValueAccessor {
+export class InputComponent implements ControlValueAccessor,OnDestroy,OnInit  {
   @Input() label = '';
   @Input() type: 'text' | 'email' | 'password' | 'number' = 'text';
 
@@ -56,6 +59,28 @@ export class InputComponent implements ControlValueAccessor {
 
   @Output() valueChanged = new EventEmitter<any>();
 
+  @Input() tooltip: string ="";
+  @Input() tooltipPosition: 'top' | 'bottom' | 'left' | 'right' = 'bottom';
+  @Input() tooltipVisible?: boolean;
+
+  @ViewChild('viewInput') inputRef!: ElementRef<HTMLInputElement>;
+  @Input() focusTrigger?: Observable<void>;
+  @Output() blur = new EventEmitter<void>();
+
+  subscriptions: Subscription[] = [];
+
+  ngOnInit(){
+    if(this.focusTrigger){
+      this.subscriptions.push(this.focusTrigger.subscribe(()=> this.onFocus()));
+    }
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((sub) => {
+      if (sub) sub.unsubscribe();
+    });
+  }
+
   private readonly baseClass = 'input';
   readonly classes = computed(() => ({
     [this.baseClass]: true,
@@ -83,9 +108,18 @@ export class InputComponent implements ControlValueAccessor {
     this.valueChanged.emit(value); // pour le parent
   }
 
+  onFocus(){
+    this.inputRef?.nativeElement.focus();
+  }
+
   // ControlValueAccessor callbacks
   onChange = (_: any) => {};
-  onTouched = () => {};
+  onTouchedCallback: () => void = () => {};
+
+  onTouched(){
+    this.onTouchedCallback();
+    this.blur.emit();
+  }
 
   // Appelé par Angular pour écrire la valeur dans le composant
   writeValue(value: any): void {
@@ -97,7 +131,7 @@ export class InputComponent implements ControlValueAccessor {
   }
   // Appelé quand le champ est touché (focus perdu)
   registerOnTouched(fn: any): void {
-    this.onTouched = fn;
+    this.onTouchedCallback = fn;
   }
   setDisabledState?(isDisabled: boolean): void {
     this._disabledInput.set(isDisabled);

@@ -30,6 +30,9 @@ $theme-light: (
   danger-hover: #dc2626,
   danger-box: color.adjust(#cf222e, $lightness: +20%),
 
+  danger-light:#ffcece,
+  danger-box-light:#ffebe9,
+
   input-disabled:rgb(229 229 227),
 
 );
