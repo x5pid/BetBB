@@ -102,15 +102,26 @@ export class RegisterComponent {
   //#endregion
 
   //#region Form Error
+
   readonly emailStatus = toSignal(this.form.controls['email'].statusChanges, {
     initialValue: this.form.controls['email'].status
   });
 
+  readonly emailTouched = toSignal(this.form.controls['email'].valueChanges.pipe(
+    map(() => this.form.controls['email'].touched)
+  ), { initialValue: this.form.controls['email'].touched });
+
   readonly emailErrorMessage = computed(() => {
     this.emailStatus(); // 👈 Dépendance obligatoire pour réactivité
-    const errors = this.form.controls['email'].errors;
-    if (!errors || !this.form.controls['email'].touched) return '';
+    this.emailTouched(); // 👈 Dépendance obligatoire pour réactivité
+    const control = this.form.controls['email'];
+    const errors = control.errors;
+    if (!errors || !control.touched) return '';
+    
+    // Gestion automatique des erreurs
     if (errors['invalidEmail']) return errors['invalidEmail'];
+    if (errors['required']) return 'L\'email est requis';
+    
     return '';
   });
 
@@ -118,11 +129,21 @@ export class RegisterComponent {
     initialValue: this.form.controls['password'].status
   });
 
+  readonly passwordTouched = toSignal(this.form.controls['password'].valueChanges.pipe(
+    map(() => this.form.controls['password'].touched)
+  ), { initialValue: this.form.controls['password'].touched });
+
   readonly passwordErrorMessage = computed(() => {
     this.passwordStatus(); // 👈 Dépendance obligatoire pour réactivité
-    const errors = this.form.controls['password'].errors;
-    if (!errors || !this.form.controls['password'].touched) return '';
+    this.passwordTouched(); // 👈 Dépendance obligatoire pour réactivité
+    const control = this.form.controls['password'];
+    const errors = control.errors;
+    if (!errors || !control.touched) return '';
+    
+    // Gestion automatique des erreurs
     if (errors['invalidPassword']) return errors['invalidPassword'];
+    if (errors['required']) return 'Le mot de passe est requis';
+    
     return '';
   });
 
@@ -130,11 +151,21 @@ export class RegisterComponent {
     initialValue: this.form.controls['username'].status
   });
 
+  readonly usernameTouched = toSignal(this.form.controls['username'].valueChanges.pipe(
+    map(() => this.form.controls['username'].touched)
+  ), { initialValue: this.form.controls['username'].touched });
+
   readonly usernameErrorMessage = computed(() => {
     this.usernameStatus(); // 👈 Dépendance obligatoire pour réactivité
-    const errors = this.form.controls['username'].errors;
-    if (!errors || !this.form.controls['username'].touched) return '';
+    this.usernameTouched(); // 👈 Dépendance obligatoire pour réactivité
+    const control = this.form.controls['username'];
+    const errors = control.errors;
+    if (!errors || !control.touched) return '';
+    
+    // Gestion automatique des erreurs
     if (errors['invalidUsername']) return errors['invalidUsername'];
+    if (errors['required']) return 'Le nom d\'utilisateur est requis';
+    
     return '';
   });
 
@@ -165,11 +196,13 @@ export class RegisterComponent {
       const payload = this.form.value as RegisterPayload;
       this._service.register(payload);
     }else {
-
-      // if(this.form.get('email')?.errors?.required) {
-      //   this.form.controls['email'].errors['invalidEmail'] = "";
-      // }
-      //this.form.markAllAsTouched();
+      this.form.markAllAsTouched();
+      this.form.controls['email'].markAsTouched();
+      this.form.controls['password'].markAsTouched();
+      this.form.controls['username'].markAsTouched();
+      this.form.controls['email'].updateValueAndValidity();
+      this.form.controls['password'].updateValueAndValidity();
+      this.form.controls['username'].updateValueAndValidity();
     }
   }
 
