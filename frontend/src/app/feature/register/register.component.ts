@@ -165,7 +165,11 @@ export class RegisterComponent {
       const payload = this.form.value as RegisterPayload;
       this._service.register(payload);
     }else {
-      this.form.markAllAsTouched();
+
+      // if(this.form.get('email')?.errors?.required) {
+      //   this.form.controls['email'].errors['invalidEmail'] = "";
+      // }
+      //this.form.markAllAsTouched();
     }
   }
 

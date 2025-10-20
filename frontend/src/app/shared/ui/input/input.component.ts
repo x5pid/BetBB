@@ -22,6 +22,7 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class InputComponent implements ControlValueAccessor,OnDestroy,OnInit  {
   @Input() label = '';
+  @Input() sub = false;
   @Input() type: 'text' | 'email' | 'password' | 'number' = 'text';
 
   @Input() set disabled(value: boolean) {

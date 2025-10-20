@@ -1,6 +1,11 @@
 <label [class]="classes()">
   @if(label){
-    <span class="input__label">{{ label }}</span>
+    <span class="input__label">
+      {{label}}
+      @if(sub){
+        <sup aria-hidden="true">*</sup>
+      }
+    </span>
   } @else {
     <ng-content select="[input__label]"></ng-content>
   }
@@ -22,10 +27,8 @@
         <mat-icon>warning</mat-icon>
         <span>{{errorMsg()}}</span>
     </div>
-  }@else {
-    @if(err()){
+  }@else if(err()){
       <ng-content select=".input__error"></ng-content>
-    }
   }
   @if(isInfoMsg()){
     <div class="input__info">

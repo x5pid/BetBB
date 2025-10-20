@@ -5,15 +5,15 @@
       <ui-form [formGroup]="form" (formSubmit)="onSubmit()" class="register__form">
           <div form-fields class="register__field">
             <!-- EMAIL -->
-            <ui-input  label="Email" type="email" formControlName="email" variant="primary"
+            <ui-input  label="Email" type="email" formControlName="email" variant="primary" [sub]="true"
               [errorMessage]="emailErrorMessage()">
             </ui-input>
             <!-- PASSWORD -->
-            <ui-input label="Password" type="password" formControlName="password" variant="primary"
+            <ui-input label="Password" type="password" formControlName="password" variant="primary" [sub]="true"
               [errorMessage]="passwordErrorMessage()" [infoMessage]="passordInfo">
             </ui-input>
             <!-- USERNAME -->
-            <ui-input  label="Username" type="text" formControlName="username" variant="primary"
+            <ui-input  label="Username" type="text" formControlName="username" variant="primary" [sub]="true"
               [errorMessage]="usernameErrorMessage()" [infoMessage]="usernameInfo">
             </ui-input>
           </div>
