@@ -1,10 +1,9 @@
-// Import des mixins et typographie
-// @use '../../../styles/mixins' as *;
-// @use '../../../styles/typography' as *;
+@use '../../../../styles/abstracts/mixins' as *;
 
 // Styles pour le composant bet-form
 .bet-form {
-  // @include card;
+  @include card;
+  height: 100%;
 
   header {
     display: flex;
@@ -17,28 +16,28 @@
     width: 64px;
     height: 64px;
     border-radius: 14px;
-    // @include flex-center;
+    @include flex-center;
     font-size: 28px;
-    background: linear-gradient(135deg, var(--blue), var(--pink));
+    background: linear-gradient(135deg, var(--bet-blue), var(--bet-pink));
     color: white;
     box-shadow: 0 6px 18px rgba(160, 170, 200, 0.18);
   }
 
   .options {
-    // @include flex-column;
+    @include flex-column;
     gap: 12px;
     margin-top: 12px;
   }
 
-  // .option {
-  //   @include option-card;
-  // }
+  .option {
+    @include option-card;
+  }
 
   .icon {
     width: 44px;
     height: 44px;
     border-radius: 10px;
-    // @include flex-center;
+    @include flex-center;
     font-size: 22px;
   }
 
@@ -51,31 +50,37 @@
   }
 
   form {
-    // @include flex-column;
+    @include flex-column;
     gap: 10px;
     margin-top: 14px;
   }
 
   .row {
-    // @include flex-row;
-
+    @include flex-row;
     > * {
       flex: 1;
     }
   }
 
-  // input,
-  // select {
-  //   @include input-field;
-  // }
+  input,
+  select {
+    @include input-field;
+  }
 
   .summary {
     flex: 1;
-    // @include flex-column;
+    @include flex-column;
     gap: 4px;
   }
 
-  // button {
-  //   @include button-primary;
-  // }
+  button {
+    @include button-primary;
+  }
+}
+
+h1 {
+  font-size: 18px;
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.2;
 }

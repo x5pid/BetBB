@@ -6,21 +6,20 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import { AuthStore } from '../services/auth.store';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PermissionsService {
   private _router = inject(Router);
-  private _storeToken = inject(AuthStore);
+  private _authService = inject(AuthService);
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
 
-    if (this._storeToken.isAuthenticated())
+    if (this._authService.isAuthenticated())
       return true;
 
     this._router.navigate(['/login']);

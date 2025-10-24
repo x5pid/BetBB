@@ -6,6 +6,16 @@
   align-items: center;
 }
 
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin flex-row {
+  display: flex;
+  gap: 8px;
+}
+
 @mixin text-truncate {
   overflow: hidden;
   white-space: nowrap;
@@ -61,3 +71,75 @@
   }
 }
 
+// Composants UI
+@mixin card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 18px;
+  box-shadow: 0 6px 20px rgba(30, 40, 60, 0.06);
+}
+
+@mixin button-primary {
+  background: linear-gradient(90deg, #76c7ff, #ff9fc2);
+  border: none;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+@mixin input-field {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(20, 30, 40, 0.06);
+  font-size: 14px;
+}
+
+@mixin option-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, var(--glass), transparent);
+  border: 1px solid rgba(140, 150, 180, 0.06);
+}
+
+@mixin stat-card {
+  flex: 1;
+  background: linear-gradient(180deg, #ffffff, #fbfdff);
+  padding: 12px;
+  border-radius: 12px;
+  @include flex-column;
+  min-width: 150px;
+}
+
+@mixin progress-bar {
+  background: #f1f6ff;
+  border-radius: 999px;
+  padding: 6px;
+}
+
+// Responsive
+@mixin mobile {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: 1025px) {
+    @content;
+  }
+}

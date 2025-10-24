@@ -1,22 +1,12 @@
-// Import des mixins et typographie
-// @use '../../styles/mixins' as *;
-// @use '../../styles/typography' as *;
 
 // Styles pour le composant bet (page principale)
 .bet-page {
-  max-width: 1100px;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
-
-  // display: grid;
-  // grid-template-columns: 360px 1fr; /* Deux colonnes : une fixe de 360px + une flexible */
-  // gap: 20px; /* Espacement entre les colonnes */
-
-  // Responsive
-  @media (max-width: 900px) {
-    grid-template-columns: 1fr;
-  }
+  font-family: Inter, system-ui, Segoe UI, Roboto, Arial;
+  background: linear-gradient(180deg, var(--bg-bet), #f7fbff 70%);
+  align-items: center;
+  height: 100%;
 }
 
 .bet-header {

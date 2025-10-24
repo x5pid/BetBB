@@ -1,8 +1,12 @@
+@use '../../../../styles/abstracts/mixins' as *;
 
 // Styles pour le composant bet-stat
 .bet-stat {
-  // @include flex-column;
+  @include flex-column;
   gap: 12px;
+  @include card;
+  height: 100%;
+  padding: 18px 18px 6px 18px;
 
   .stats {
     display: flex;
@@ -11,9 +15,9 @@
     flex-wrap: wrap;
   }
 
-  // .stat {
-  //   @include stat-card;
-  // }
+  .stat {
+    @include stat-card;
+  }
 
   .value {
     font-weight: 700;
@@ -40,14 +44,14 @@
     width: 10px;
   }
 
-  // .progress-wrapper {
-  //   @include progress-bar;
-  // }
+  .progress-wrapper {
+    @include progress-bar;
+  }
 
   .progress {
     height: 16px;
     border-radius: 999px;
-    background: linear-gradient(90deg, var(--blue), var(--pink));
+    background: linear-gradient(90deg, var(--bet-blue), var(--bet-pink));
     width: 50%;
   }
 
@@ -68,9 +72,9 @@
     justify-content: space-between;
   }
 
-  // button {
-  //   @include button-primary;
-  // }
+  button {
+    @include button-primary;
+  }
 
   footer {
     text-align: center;
