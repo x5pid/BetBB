@@ -120,7 +120,7 @@ export class RegisterComponent {
     
     // Gestion automatique des erreurs
     if (errors['invalidEmail']) return errors['invalidEmail'];
-    if (errors['required']) return 'L\'email est requis';
+    if (errors['required']) return 'Email cannot be blank';
     
     return '';
   });
@@ -142,7 +142,7 @@ export class RegisterComponent {
     
     // Gestion automatique des erreurs
     if (errors['invalidPassword']) return errors['invalidPassword'];
-    if (errors['required']) return 'Le mot de passe est requis';
+    if (errors['required']) return 'Password cannot be blank';
     
     return '';
   });
@@ -164,7 +164,7 @@ export class RegisterComponent {
     
     // Gestion automatique des erreurs
     if (errors['invalidUsername']) return errors['invalidUsername'];
-    if (errors['required']) return 'Le nom d\'utilisateur est requis';
+    if (errors['required']) return 'Username cannot be blank';
     
     return '';
   });

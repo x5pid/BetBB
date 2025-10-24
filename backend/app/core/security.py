@@ -47,3 +47,26 @@ def refresh_access_token(refresh_token: str) -> Dict:
         raise ValueError("Invalid or expired refresh token")
 
     return create_access_token({"sub": email})
+
+# Password reset token helpers
+def create_password_reset_token(data: Dict) -> Dict:
+    expires_delta = timedelta(minutes=settings.RESET_TOKEN_EXPIRE_MINUTES)
+    expire = datetime.utcnow() + expires_delta
+    to_encode = data.copy()
+    to_encode.update({"exp": expire})
+
+    token = jwt.encode(to_encode, settings.RESET_SECRET_KEY, algorithm=settings.ALGORITHM)
+    return {
+        "reset_token": token,
+        "expires_in": int(expires_delta.total_seconds())
+    }
+
+def verify_password_reset_token(reset_token: str) -> str:
+    try:
+        payload = jwt.decode(reset_token, settings.RESET_SECRET_KEY, algorithms=[settings.ALGORITHM])
+        email = payload.get("sub")
+        if not email:
+            raise ValueError("Invalid payload")
+        return email
+    except Exception:
+        raise ValueError("Invalid or expired reset token")

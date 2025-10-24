@@ -3,9 +3,18 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
-from app.core.security import verify_password, create_access_token, get_password_hash, create_refresh_token, refresh_access_token
+from app.core.security import (
+    verify_password,
+    create_access_token,
+    get_password_hash,
+    create_refresh_token,
+    refresh_access_token,
+    create_password_reset_token,
+    verify_password_reset_token,
+)
 from app.db.session import get_db
 from app.schemas.token import TokenResponse
+from app.schemas.password import ForgotPasswordRequest, ResetPasswordRequest
 from app.db.models.user import User
 from app.crud.schemas import RegisterUser
 from fastapi import Body
@@ -68,6 +77,40 @@ def login(response: Response,form_data: OAuth2PasswordRequestForm = Depends(), d
         "token_type": "bearer",
         "expires_in": access_token_data["expires_in"]
     }
+
+@router.post("/forgot-password")
+def forgot_password(payload: ForgotPasswordRequest, db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.email == payload.email).first()
+    # Always return 200 to avoid account enumeration
+    if not user:
+        return {"msg": "If the email exists, a reset link has been sent."}
+
+    token_data = create_password_reset_token({"sub": user.email})
+
+    # TODO: integrate an email service. For now, return the token for testing.
+    # In production, remove the token from the response and send via email.
+    return {
+        "msg": "Reset link sent",
+        "reset_token": token_data["reset_token"],
+        "expires_in": token_data["expires_in"],
+    }
+
+@router.post("/reset-password")
+def reset_password(payload: ResetPasswordRequest, db: Session = Depends(get_db)):
+    try:
+        email = verify_password_reset_token(payload.token)
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid or expired reset token")
+
+    user = db.query(User).filter(User.email == email).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    user.hashed_password = get_password_hash(payload.new_password)
+    db.add(user)
+    db.commit()
+
+    return {"msg": "Password updated successfully"}
 
 @router.post("/token")
 def refresh_token_from_cookie(request: Request):
