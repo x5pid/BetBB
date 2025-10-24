@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { computed, inject, Injectable } from '@angular/core';
 import { API_URL } from '../../tokens';
-import { RegisterPayload } from '../models/auth.model';
+import { Email, NewPassword, RegisterPayload } from '../models/auth.model';
 import { RequestHandlerService } from './request-handler.service';
 import { Observable, shareReplay, tap } from 'rxjs';
 
@@ -25,6 +25,12 @@ export class AuthService {
   private readonly _registration = this._requestHandler.createRequestState();
   registration = this._registration?.state;
 
+  private readonly _forgotPassword = this._requestHandler.createRequestState();
+  forgotPassword = this._forgotPassword?.state;
+
+  private readonly _newPassword = this._requestHandler.createRequestState();
+  newPassword = this._newPassword?.state;
+
   login(email: string, password: string){
     const body = new URLSearchParams({ username: email, password });
     const $req = this._http.post<AccessToken>(`${this._apiUrl}/login`, body.toString(), {
@@ -45,6 +51,16 @@ export class AuthService {
   register(payload: RegisterPayload) {
     const req$ = this._http.post(`${this._apiUrl}/register`, payload);
     this._registration.run(req$);
+  }
+
+  forgetPassword(email: Email) {
+    const req$ = this._http.post(`${this._apiUrl}/forgot-password`, email);
+    this._forgotPassword.run(req$);
+  }
+
+  resetPassword(newPassword: NewPassword) {
+    const req$ = this._http.post(`${this._apiUrl}/reset-password`, newPassword);
+    this._newPassword.run(req$);
   }
 
 }

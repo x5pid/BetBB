@@ -117,11 +117,11 @@ export class RegisterComponent {
     const control = this.form.controls['email'];
     const errors = control.errors;
     if (!errors || !control.touched) return '';
-    
+
     // Gestion automatique des erreurs
     if (errors['invalidEmail']) return errors['invalidEmail'];
     if (errors['required']) return 'Email cannot be blank';
-    
+
     return '';
   });
 
@@ -139,11 +139,11 @@ export class RegisterComponent {
     const control = this.form.controls['password'];
     const errors = control.errors;
     if (!errors || !control.touched) return '';
-    
+
     // Gestion automatique des erreurs
     if (errors['invalidPassword']) return errors['invalidPassword'];
     if (errors['required']) return 'Password cannot be blank';
-    
+
     return '';
   });
 
@@ -161,11 +161,11 @@ export class RegisterComponent {
     const control = this.form.controls['username'];
     const errors = control.errors;
     if (!errors || !control.touched) return '';
-    
+
     // Gestion automatique des erreurs
     if (errors['invalidUsername']) return errors['invalidUsername'];
     if (errors['required']) return 'Username cannot be blank';
-    
+
     return '';
   });
 
@@ -175,18 +175,22 @@ export class RegisterComponent {
   success = this._service.registration.success;
   countdown = signal(10);
 
+  intervalId?: number;
+
   constructor() {
     effect(() =>{
       if (this.success()) {
-        const intervalId = setInterval(() => {
-          const value = this.countdown();
-          if (value > 0) {
-            this.countdown.set(value - 1);
-          } else {
-            clearInterval(intervalId);
-            this._router.navigate(['/login']); // page de redirection
-          }
-        }, 1000);
+        if(!this.intervalId){
+          this.intervalId = setInterval(() => {
+            const value = this.countdown();
+            if (value > 0) {
+              this.countdown.set(value - 1);
+            } else {
+              clearInterval(this.intervalId);
+              this._router.navigate(['/login']); // page de redirection
+            }
+          }, 1000);
+        }
       }
     });
   }

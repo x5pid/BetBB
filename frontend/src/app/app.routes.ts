@@ -24,6 +24,12 @@ export const routes: Routes = [
       import('./feature/forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent),
     canActivate: [NotAuthGuard],
   },
+  {
+    path: 'reset-password',
+    loadComponent: () =>
+      import('./feature/reset-password/reset-password.component').then(m => m.ResetPasswordComponent),
+    canActivate: [NotAuthGuard],
+  },
   // Private Routes
   {
     path: 'bet',
