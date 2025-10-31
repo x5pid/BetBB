@@ -4,6 +4,8 @@ import { API_URL } from '../../tokens';
 import { Email, NewPassword, RegisterPayload } from '../models/auth.model';
 import { RequestHandlerService } from './request-handler.service';
 import { Observable, shareReplay, tap } from 'rxjs';
+import { ErrorResponse } from '../models/error.model';
+import { TokenService } from './token.service';
 
 export interface AccessToken {
   access_token: string;
@@ -17,6 +19,7 @@ export class AuthService {
   private _http = inject(HttpClient);
   private readonly _apiUrl = inject(API_URL);
   private _requestHandler = inject(RequestHandlerService);
+  private _tokenService = inject(TokenService);
 
   private readonly _token = this._requestHandler.createRequestState<AccessToken>();
   token = this._token?.state;
@@ -31,17 +34,36 @@ export class AuthService {
   private readonly _newPassword = this._requestHandler.createRequestState();
   newPassword = this._newPassword?.state;
 
+  constructor() {
+    const token = this._tokenService.getToken();
+    if(token) this._token.updateData(token);
+  }
+
   login(email: string, password: string){
     const body = new URLSearchParams({ username: email, password });
     const $req = this._http.post<AccessToken>(`${this._apiUrl}/login`, body.toString(), {
       headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
     });
-    this._token.run($req);
+
+    const options = {
+      onSuccess: (token: AccessToken) => {
+        if(token) this._tokenService.setToken(token);
+      },
+      onError: (err: ErrorResponse) => {
+        this._tokenService.removeToken();
+        return null;
+      }
+    };
+    this._token.run($req,options);
   }
 
   refreshToken(): Observable<AccessToken> {
     return this._http.post<AccessToken>(`${this._apiUrl}/token/refresh`, {}, { withCredentials: true }).pipe(
-      tap((res) => this._token.updateData(res)));
+      tap((token) => {
+        this._token.updateData(token);
+        this._tokenService.setToken(token);
+      }
+    ));
   }
 
   logout() {

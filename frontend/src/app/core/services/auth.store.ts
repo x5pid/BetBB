@@ -9,30 +9,21 @@ export class AuthStore {
   private _timer: any = null;
   readonly refreshToken = signal(false);
 
-
-  private isBrowser: boolean;
-
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
-    this.isBrowser = isPlatformBrowser(this.platformId);
-    if(this.isBrowser){
-      const saved = localStorage.getItem('access_token');
-      if (saved) {
-        this._token.set(saved);
-      }
+  constructor() {
+    const saved = localStorage.getItem('access_token');
+    if (saved) {
+      this._token.set(saved);
     }
   }
-
 
   setToken(token: string | null, expiresIn: number | null = null) {
     this._token.set(token);
     if (token && expiresIn) {
-      if(this.isBrowser)
-        localStorage.setItem('access_token', token);
+      localStorage.setItem('access_token', token);
       this.scheduleTokenRefresh(expiresIn);
     } else {
       this.clearRefreshTimer();
-      if(this.isBrowser)
-        localStorage.removeItem('access_token');
+      localStorage.removeItem('access_token');
     }
   }
 
