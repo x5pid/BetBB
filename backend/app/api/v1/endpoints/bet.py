@@ -7,16 +7,18 @@ from sqlalchemy import exc
 
 from app.db.models.bet import Bet
 from app.schemas.bet import BetCreate, BetResponse
+from app.db.models.user import User
+from app.core.bet import get_current_user
 
 
 router = APIRouter()
 
 # 1. Add a new Bet
 @router.post("/bets/", response_model=BetResponse)
-async def create_bet(bet: BetCreate, db: Session = Depends(get_db)):
+async def create_bet(bet: BetCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     try:
         new_bet = Bet(
-            user_id=1,  # This should ideally come from the authenticated user (not hardcoded)
+            user_id=current_user.id,
             date=date.today(),
             amount=bet.amount,
             gender=bet.gender,
@@ -51,12 +53,9 @@ async def get_all_bets(db: Session = Depends(get_db)):
     return response
 
 # 3. Get all bets for a specific user
-@router.get("/bets/{user_id}", response_model=List[BetResponse])
-async def get_user_bets(user_id: int, db: Session = Depends(get_db)):
-    bets = db.query(Bet).filter(Bet.user_id == user_id).all()
-
-    if not bets:
-        raise HTTPException(status_code=404, detail="Bets not found for this user")
+@router.get("/bets/me", response_model=List[BetResponse])
+async def get_user_bets(db: Session = Depends(get_db),current_user: User = Depends(get_current_user)):
+    bets = db.query(Bet).filter(Bet.user_id == current_user.id).all()
 
     return [
         {

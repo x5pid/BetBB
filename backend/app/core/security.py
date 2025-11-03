@@ -70,3 +70,14 @@ def verify_password_reset_token(reset_token: str) -> str:
         return email
     except Exception:
         raise ValueError("Invalid or expired reset token")
+
+def get_email_current_user(token: str) -> str:
+    try:
+        # Décoder le token JWT et obtenir les données
+        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
+        email: str = payload.get("sub")  # 'sub' est l'email de l'utilisateur
+        if not email:
+            raise ValueError("Invalid payload")
+        return email
+    except Exception:
+        raise ValueError("Invalid or expired reset token")

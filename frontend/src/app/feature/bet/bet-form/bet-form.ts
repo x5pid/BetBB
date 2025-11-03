@@ -1,7 +1,8 @@
-import { Component, computed, input, signal } from '@angular/core';
+import { Component, computed, inject, input, signal } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { CoinDropDirective } from './coin-drop.directive';
 import { FormsModule } from '@angular/forms';
+import { BetService } from '../../../core/services/bet.service';
 
 @Component({
   selector: 'app-bet-form',
@@ -14,6 +15,8 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './bet-form.scss'
 })
 export class BetForm {
+  private _serviceBet = inject(BetService);
+
   // Odds
   oddsBoy = input.required<number>();
   oddsGirl = input.required<number>();

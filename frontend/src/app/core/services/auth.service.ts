@@ -3,13 +3,17 @@ import { computed, inject, Injectable } from '@angular/core';
 import { API_URL } from '../../tokens';
 import { Email, NewPassword, RegisterPayload } from '../models/auth.model';
 import { RequestHandlerService } from './request-handler.service';
-import { Observable, shareReplay, tap } from 'rxjs';
+import { map, Observable, shareReplay, tap } from 'rxjs';
 import { ErrorResponse } from '../models/error.model';
 import { TokenService } from './token.service';
 
 export interface AccessToken {
   access_token: string;
   expires_in: number;
+}
+
+export interface AccessTokenWithExpiration extends AccessToken {
+  expire: number;
 }
 
 @Injectable({
@@ -21,7 +25,7 @@ export class AuthService {
   private _requestHandler = inject(RequestHandlerService);
   private _tokenService = inject(TokenService);
 
-  private readonly _token = this._requestHandler.createRequestState<AccessToken>();
+  private readonly _token = this._requestHandler.createRequestState<AccessTokenWithExpiration>();
   token = this._token?.state;
   readonly isAuthenticated = computed(() => !!this._token.state.data());
 
@@ -41,12 +45,13 @@ export class AuthService {
 
   login(email: string, password: string){
     const body = new URLSearchParams({ username: email, password });
+
     const $req = this._http.post<AccessToken>(`${this._apiUrl}/login`, body.toString(), {
       headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
-    });
+    }).pipe(map(a => this.addExpirationToToken(a)));
 
     const options = {
-      onSuccess: (token: AccessToken) => {
+      onSuccess: (token: AccessTokenWithExpiration) => {
         if(token) this._tokenService.setToken(token);
       },
       onError: (err: ErrorResponse) => {
@@ -57,13 +62,19 @@ export class AuthService {
     this._token.run($req,options);
   }
 
-  refreshToken(): Observable<AccessToken> {
-    return this._http.post<AccessToken>(`${this._apiUrl}/token/refresh`, {}, { withCredentials: true }).pipe(
-      tap((token) => {
-        this._token.updateData(token);
-        this._tokenService.setToken(token);
-      }
-    ));
+  private addExpirationToToken(a: AccessToken): AccessTokenWithExpiration {
+    const expireAt = Date.now() + a.expires_in * 1000;  // expires_in est en secondes, donc on multiplie par 1000 pour avoir les millisecondes
+    return { ...a, expire: expireAt };
+  }
+
+  refreshToken(): Observable<AccessTokenWithExpiration> {
+    return this._http.post<AccessToken>(`${this._apiUrl}/token/refresh`, {}, { withCredentials: true })
+    .pipe(map(a => {
+      const token = this.addExpirationToToken(a);
+      this._token.updateData(token);
+      this._tokenService.setToken(token);
+      return token;
+    }));
   }
 
   logout() {

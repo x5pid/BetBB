@@ -1,8 +1,9 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { BetForm } from './bet-form/bet-form';
 import { BetStat } from './bet-stat/bet-stat';
 import { BetSvgBebe } from './bet-svg-bebe/bet-svg-bebe';
 import { BetSvgPig } from './bet-svg-pig/bet-svg-pig';
+import { BetService } from '../../core/services/bet.service';
 
 @Component({
   selector: 'app-bet',
@@ -16,6 +17,13 @@ import { BetSvgPig } from './bet-svg-pig/bet-svg-pig';
   styleUrl: './bet.scss'
 })
 export class Bet {
+  private _serviceBet = inject(BetService);
+
+  bet = this._serviceBet.bet;
+
+  constructor(){
+    this._serviceBet.getBetMe();
+  }
 
   // Odds
   oddsBoy = signal(2.00);

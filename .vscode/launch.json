@@ -1,0 +1,20 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "FastAPI: Uvicorn",
+      "type": "python",
+      "request": "launch",
+      "program": "C:/Users/cgarcia-at/AppData/Local/Programs/Python/Python312/Scripts/uvicorn.exe",  // Remplace par le chemin vers uvicorn si nécessaire
+      "args": [
+        "app.main:app",           // Remplace par ton fichier et ton objet FastAPI
+        "--reload"            // Active le rechargement automatique en mode développement
+      ],
+      "console": "integratedTerminal",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}"
+      },
+      "justMyCode": true
+    }
+  ]
+}
