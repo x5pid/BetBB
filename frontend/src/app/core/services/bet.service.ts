@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { API_URL } from '../../tokens';
 import { RequestHandlerService } from './request-handler.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,12 @@ export class BetService {
   private readonly _createBet = this._requestHandler.createRequestState<Bet>();
   createBet = this._createBet?.state;
 
+  private readonly _gender = this._requestHandler.createRequestState<string[]>();
+  gender = this._gender?.state;
+
+  private readonly _symbolicObject= this._requestHandler.createRequestState<string[]>();
+  symbolicObject = this._symbolicObject?.state;
+
   constructor() {}
 
   createBetMe(bet: CreateBetRequest) {
@@ -35,6 +42,16 @@ export class BetService {
   getBetAll() {
     const req$ = this._http.get<Bet[]>(`${this._apiUrl}/bets`);
     this._bets.run(req$);
+  }
+
+  getGender() {
+    const req$ = this._http.get<string[]>(`${this._apiUrl}/genres`);
+    this._gender.run(req$);
+  }
+
+  getSymbolicObject() {
+    const req$ = this._http.get<string[]>(`${this._apiUrl}/symbolic-objects`);
+    this._symbolicObject.run(req$);
   }
 
 }

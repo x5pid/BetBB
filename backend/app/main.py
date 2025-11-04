@@ -1,8 +1,5 @@
 from fastapi import FastAPI
-from app.api.v1.endpoints import auth
-from app.api.v1.endpoints import validate
-from app.api.v1.endpoints import bet
-from app.api.v1.endpoints import user
+from app.api.v1.endpoints import auth,bet,user,gender,validate,objetsymbolique
 from app.db.session import engine, Base
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
@@ -29,3 +26,5 @@ app.include_router(auth.router, prefix="/api/v1")
 app.include_router(validate.router, prefix="/api/v1")
 app.include_router(bet.router, prefix="/api/v1")
 app.include_router(user.router, prefix="/api/v1")
+app.include_router(gender.router, prefix="/api/v1")
+app.include_router(objetsymbolique.router, prefix="/api/v1")

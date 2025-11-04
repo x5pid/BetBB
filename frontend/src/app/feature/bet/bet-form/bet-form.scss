@@ -49,10 +49,15 @@
     font-weight: 700;
   }
 
-  form {
+  form, .betForm-fields {
     @include flex-column;
     gap: 10px;
     margin-top: 14px;
+  }
+
+  .betForm-actions{
+    display: flex;
+    gap: 8px;
   }
 
   .row {
@@ -75,6 +80,7 @@
 
   button {
     @include button-primary;
+    flex: 1;
   }
 }
 
@@ -83,4 +89,21 @@ h1 {
   margin: 0;
   font-weight: 600;
   line-height: 1.2;
+}
+
+
+.icon-couche::before {
+  content: "🧻";
+}
+
+.icon-sucette::before {
+  content: "🧸";
+}
+
+.icon-biberon::before {
+  content: "🍼";
+}
+
+.icon-jouet::before {
+  content: "🧩";
 }

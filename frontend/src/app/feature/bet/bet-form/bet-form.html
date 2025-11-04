@@ -27,32 +27,33 @@
     </div>
   </div>
 
-  <form id="betForm" (ngSubmit)="onSubmit($event)">
-    <label class="label">Choisir un objet symbolique</label>
-    <select id="symbol" aria-label="Objet symbolique">
-      <option value="couche">🧻 Couche</option>
-      <option value="sucette">🧸 Sucette</option>
-      <option value="biberon">🍼 Biberon</option>
-      <option value="jouet">🧩 Jouet</option>
-    </select>
-
-    <div class="row">
-      <select id="choice" (change)="onChoiceChange($event)">
-        <option value="boy">Garçon</option>
-        <option value="girl">Fille</option>
+  <ui-form id="betForm" [formGroup]="form" (submit)="onSubmit()">
+    <div class="betForm-fields" form-fields>
+      <label class="label">Choisir un objet symbolique</label>
+      <select id="symbol" aria-label="Objet symbolique" formControlName="symbolic_object">
+        @for (object of symbolicObject | async; track $index) {
+          <option [value]="object">{{object}}</option>
+        }
       </select>
-      <input type="number" id="stake" min="1" value="5" (input)="onStakeChange($event)" />
+
+      <div class="row">
+        <select id="choice" (change)="onChoiceChange($event)" formControlName="gender">
+          @for (gender of genders | async; track $index) {
+            <option [value]="gender">{{gender}}</option>
+          }
+        </select>
+        <input type="number" id="stake" min="1" value="5" formControlName="amount" /><!--(input)="onStakeChange($event)" -->
+      </div>
     </div>
 
-    <div class="row">
+    <div class="betForm-actions" form-actions>
       <div class="summary">
         <div class="small">Gain potentiel :</div>
         <div id="potential">{{ (potential())  ?? '—'}}</div>
-         <div class="small">Total des gains :</div>
+        <div class="small">Total des gains :</div>
         <div id="user-stake">{{ (userTotal())  ?? '—'}}</div>
       </div>
       <button class="animation-zone" appCoinDrop [count]="10" [launch]="true" [jarId]="'svgpig'">Parier</button>
     </div>
-  </form>
-
+  </ui-form>
 </aside>
