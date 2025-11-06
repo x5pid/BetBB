@@ -6,8 +6,8 @@
         <div class="distribution-item">
           <div class="distribution-header">
             <div class="small">Garçon</div>
-            <div id="pct-boy">50%</div>
-          </div>
+              <div id="pct-boy">{{ distributionBoy() }}%</div>
+            </div>
           <div class="progress-wrapper">
             <div id="bar-boy" class="progress" style="width:50%"></div>
           </div>
@@ -16,7 +16,7 @@
         <div class="distribution-item">
           <div class="distribution-header">
             <div class="small">Fille</div>
-            <div id="pct-girl">50%</div>
+            <div id="pct-girl">{{ distributionGirl() }}%</div>
           </div>
           <div class="progress-wrapper">
             <div id="bar-girl" class="progress" style="width:50%;background:linear-gradient(90deg,#ffb7d0,#ffd6e6)"></div>
@@ -27,17 +27,17 @@
 
     <div class="stat">
       <div class="small">Mises totales</div>
-      <div class="value" id="total-stakes">0</div>
+      <div class="value" id="total-stakes">{{total()}}</div>
     </div>
 
     <div class="stat">
       <div class="small">Dernier pari</div>
-      <div class="value" id="last-bet">—</div>
+      <div class="value" id="last-bet">{{lastBet() || '—'}}</div>
     </div>
 
     <div class="stat">
       <div class="small">Vos gains potentiels cumulés</div>
-      <div class="value" id="user-total-gains">0</div>
+      <div class="value" id="user-total-gains">{{potencial()}}</div>
     </div>
   </div>
 
@@ -52,5 +52,4 @@
     </div>
   </div>
 
-  <footer class="small">Fichier autonome — modifiez les objets, règles ou calculs dans la section &lt;script&gt;.</footer>
 </main>

@@ -1,5 +1,8 @@
-import { AfterViewInit, Component } from '@angular/core';
-import { Chart, CategoryScale, LinearScale, Title, Tooltip, Legend, LineController, PointElement, LineElement } from 'chart.js'; // Importer les modules nécessaires
+import { AfterViewInit, Component, computed, inject, signal } from '@angular/core';
+import { Chart, CategoryScale, LinearScale, Title, Tooltip, Legend, LineController, PointElement, LineElement, TimeScale, ScatterDataPoint } from 'chart.js'; // Importer les modules nécessaires
+import 'chartjs-adapter-date-fns'; // Importer l'adaptateur de date
+import { BetService } from '../../../core/services/bet.service';
+import { BetDistribution } from '../../../core/models/bet.model';
 
 @Component({
   selector: 'app-bet-stat',
@@ -8,7 +11,44 @@ import { Chart, CategoryScale, LinearScale, Title, Tooltip, Legend, LineControll
   styleUrl: './bet-stat.scss'
 })
 export class BetStat implements AfterViewInit {
-constructor() {}
+
+  private _serviceBet = inject(BetService);
+  // Bet Stats
+  private _betStats = this._serviceBet.betStats?.data;
+  betStatsSuccess = this._serviceBet.betStats?.success;
+  betStatsLoading = this._serviceBet.betStats?.loading;
+  // User Bet Stats
+  private _userBetStats = this._serviceBet.userBetStats?.data;
+  userBetStatsSuccess = this._serviceBet.userBetStats?.success;
+  userBetStatsLoading = this._serviceBet.userBetStats?.loading;
+
+  //Distribution
+  distributionBoy = computed(() => 
+    this._betStats()?.distribution?.find((item: BetDistribution) => item.gender === 'Garçon')?.percentage ?? 0
+  );
+  distributionGirl = computed(() => 
+    this._betStats()?.distribution?.find((item: BetDistribution) => item.gender === 'Fille')?.percentage ?? 0
+  );
+  // Total
+  total = computed(() => this._betStats()?.total_bets);
+  //Last Bet
+  lastBet = computed(() => 
+    `${this._betStats()?.last_bet?.gender} (${this._betStats()?.last_bet?.amount})`
+  );
+
+  // Odds
+  oddsBoy = computed(() => this._betStats()?.boy_odds ?? 1.00);
+  oddsGirl = computed(() => this._betStats()?.girl_odds ?? 1.00);
+  //Potential
+  potencial = computed(() => {
+    const stats = this._userBetStats();
+    if (!stats) return 0;
+    const amount = Number(stats.amount) || 0;
+    const odds = stats.gender === 'Fille' ? this.oddsGirl() : this.oddsBoy();
+    return amount * odds;
+  });
+
+  constructor() {}
 
   ngOnInit(): void {}
 
@@ -16,11 +56,15 @@ constructor() {}
     this.createChart();
   }
 
-createChart(): void {
-    // Enregistrer les modules nécessaires pour Chart.js v4
+  dataSignal = computed(() => this._betStats()?.odds_history );
+
+  private chart!: Chart<'line', ScatterDataPoint[], unknown>;
+
+  createChart(): void {
     Chart.register(
       CategoryScale,
       LinearScale,
+      TimeScale, // ⏱️ Échelle temporelle
       Title,
       Tooltip,
       Legend,
@@ -32,66 +76,67 @@ createChart(): void {
     const ctx = (document.getElementById('myChart') as HTMLCanvasElement).getContext('2d');
 
     if (ctx) {
-      new Chart(ctx, {
-        type: 'line', // Type de graphique
+      this.chart = new Chart(ctx, {
+        type: 'line',
         data: {
-          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'], // Labels de l'axe X
-          datasets: [{
-            label: 'Données Bleu',
-            data: [10, 20, 30, 40, 50],  // Données du graphique 1
-            borderColor: 'rgba(75, 192, 192, 1)', // Couleur de la ligne bleue
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-            borderWidth: 2,
-            pointBackgroundColor: 'rgba(75, 192, 192, 1)', // Couleur des points
-            pointRadius: 20,
-            pointStyle: 'image', // Utiliser une image
-            // pointImage: 'assets/images/papier.png', // L'image du point
-            fill: false,  // Pas de remplissage sous la courbe
-          }, {
-            label: 'Données Rose',
-            data: [50, 40, 30, 20, 10],  // Données du graphique 2
-            borderColor: 'rgba(255, 99, 132, 1)', // Couleur de la ligne rose
-            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-            borderWidth: 2,
-            pointBackgroundColor: 'rgba(255, 99, 132, 1)', // Couleur des points
-            pointRadius: 20,
-            pointStyle: 'image', // Utiliser une image
-            // pointImage: 'assets/images/ours.png', // L'image du point
-            fill: false,  // Pas de remplissage sous la courbe
-          }]
+          datasets: [
+            {
+              label: 'Garçon',
+              data: this.dataSignal()?.map(d => ({
+                x: d.date,
+                y: d.boy_odds
+              } as unknown as ScatterDataPoint)) ?? [],
+              borderColor: 'rgba(54, 162, 235, 1)',
+              backgroundColor: 'rgba(54, 162, 235, 0.2)',
+              tension: 0.3,
+            },
+            {
+              label: 'Fille',
+              data: this.dataSignal()?.map(d => ({
+                x: d.date,
+                y: d.girl_odds
+              } as unknown as ScatterDataPoint)) ?? [],
+              borderColor: 'rgba(255, 99, 132, 1)',
+              backgroundColor: 'rgba(255, 99, 132, 0.2)',
+              tension: 0.3,
+            },
+          ],
         },
         options: {
           responsive: true,
           scales: {
             x: {
-              type: 'category',  // Type de l'échelle X (catégorie)
-              min: 'Jan', // Début de l'échelle X (facultatif)
+              type: 'time', // 📅 Type d’échelle temporelle
+              time: {
+                unit: 'minute', // ou 'second', 'hour', etc. → Chart.js choisira automatiquement si tu ne précises pas
+                displayFormats: {
+                  minute: 'HH:mm:ss',
+                },
+              },
+              title: {
+                display: true,
+                text: 'Date / Heure',
+              },
             },
             y: {
-              type: 'linear',  // Type de l'échelle Y (linéaire)
-              min: 0,  // Début de l'échelle Y
-            }
+              type: 'linear',
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Odds',
+              },
+            },
           },
-          plugins: {
-            tooltip: {
-              callbacks: {
-                // Ajouter des informations supplémentaires dans le tooltip
-                label: (context) => {
-                  let label = context.dataset.label || '';
-                  if (label) {
-                    label += ': ';
-                  }
-                  label += context.raw;  // Afficher la valeur du point
-                  // Ajouter une ligne supplémentaire avec l'icône correspondante
-                  label += ` 🧸 : valeur spécifique`;  // Ajouter une info sur le changement
-                  return label;
-                }
-              }
-            }
-          }
-        }
+        },
       });
     }
+  }
+
+  updateChartData(data: { datetime: string; boy_odds: number; girl_odds: number }[]): void {
+    // Mise à jour des datasets avec les nouvelles données
+    this.chart.data.datasets[0].data = data.map(d => ({ x: d.datetime, y: d.boy_odds } as unknown as ScatterDataPoint));
+    this.chart.data.datasets[1].data = data.map(d => ({ x: d.datetime, y: d.girl_odds } as unknown as ScatterDataPoint));
+    this.chart.update();
   }
 
 }
