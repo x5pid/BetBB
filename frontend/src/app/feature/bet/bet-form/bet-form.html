@@ -31,14 +31,14 @@
     <div class="betForm-fields" form-fields>
       <label class="label">Choisir un objet symbolique</label>
       <select id="symbol" aria-label="Objet symbolique" formControlName="symbolic_object">
-        @for (object of symbolicObject | async; track $index) {
-          <option [value]="object">{{object}}</option>
+        @for (item of symbolicObjectWithClass(); track $index) {
+          <option [value]="item.value">{{item.icon}} {{item.value}}</option>
         }
       </select>
 
       <div class="row">
         <select id="choice" (change)="onChoiceChange($event)" formControlName="gender">
-          @for (gender of genders | async; track $index) {
+          @for (gender of genders(); track $index) {
             <option [value]="gender">{{gender}}</option>
           }
         </select>

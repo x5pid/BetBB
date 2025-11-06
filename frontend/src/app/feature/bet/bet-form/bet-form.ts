@@ -3,6 +3,7 @@ import { CommonModule, DecimalPipe } from '@angular/common';
 import { CoinDropDirective } from './coin-drop.directive';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BetService } from '../../../core/services/bet.service';
+import { CreateBetRequest } from '../../../core/models/bet.model';
 import { CardComponent } from '../../../shared/ui/card/card.component';
 import { ButtonComponent } from '../../../shared/ui/button/button.component';
 import { InputComponent } from '../../../shared/ui/input/input.component';
@@ -33,11 +34,29 @@ export class BetForm {
   private _isGender = this._gender.success;
 
   private _symbolicObject = this._serviceBet.symbolicObject;
-  symbolicObject = this._symbolicObject.data;
+  private _symbolicObjectData = this._symbolicObject.data;
   private _hasSymbolicObject = this._symbolicObject.success;
 
+  // Mapper les objets symboliques avec leur classe d'icône
+  symbolicObjectWithClass = computed(() => {
+    const objects = this._symbolicObjectData();
+    if (!objects) return [];
+    
+    const iconMap: { [key: string]: string } = {
+      'Peluche': '🧸',
+      'Sucette': '🍭',
+      'Biberon': '🍼',
+      'Jouet': '🎠'
+    };
+    
+    return objects.map(object => ({
+      value: object,
+      icon: iconMap[object] || ''
+    }));
+  });
+
   form = this._fb.group({
-    amount: [1, [Validators.required]],
+    amount: [5, [Validators.required, Validators.min(1)]],
     gender: ['', [Validators.required]],
     symbolic_object: ['', [Validators.required]],
   });
@@ -50,20 +69,37 @@ export class BetForm {
         this.form.controls['gender'].setValue(value);
       }
     });
-  }
+    effect(()=>{
+      if(this._hasSymbolicObject()){
+        const list = this._symbolicObjectData();
+        const value = list && list.length > 0 ? list[0] : '';
+        this.form.controls['symbolic_object'].setValue(value);
+      }
+    });
 
+    this._serviceBet.getGender();
+    this._serviceBet.getSymbolicObject();
+  }
+  // Bet Stats
+  private _betStats = this._serviceBet.betStats?.data;
+  betStatsSuccess = this._serviceBet.betStats?.success;
+  betStatsLoading = this._serviceBet.betStats?.loading;
+  // User Bet Stats
+  private _userBetStats = this._serviceBet.userBetStats?.data;
+  userBetStatsSuccess = this._serviceBet.userBetStats?.success;
+  userBetStatsLoading = this._serviceBet.userBetStats?.loading;
 
   // Odds
-  oddsBoy = input.required<number>();
-  oddsGirl = input.required<number>();
+  oddsBoy = computed(() => this._betStats()?.boy_odds ?? 1.00);
+  oddsGirl = computed(() => this._betStats()?.girl_odds ?? 1.00);
   // Total
-  totalBoy = input.required<number>();
-  totalGirl = input.required<number>();
-  userTotal = input.required<number>();
+  totalBoy = computed(() => this._betStats()?.boy_total ?? 0);
+  totalGirl = computed(() => this._betStats()?.girl_total ?? 0);
+  userTotal = computed(() => this._userBetStats()?.amount ?? 0);
 
   // Form
   userStake = signal(5) ;
-  selectedChoiceBebe = signal<string>('boy'); // valeur initiale
+  selectedChoiceBebe = signal<string>(''); // valeur initiale
 
   // Potential
   potential = computed(() => {
@@ -74,9 +110,6 @@ export class BetForm {
     }
     return 0;
   });
-
-
-
 
   onStakeChange(event: Event) {
     const inputValue = (event.target as HTMLInputElement).value;
@@ -90,7 +123,14 @@ export class BetForm {
 
   onSubmit() {
     if(this.form.valid){
-
+      const formValue = this.form.value;
+      const betRequest: CreateBetRequest = {
+        amount: Number(formValue.amount),
+        gender: formValue.gender!,
+        symbolic_object: formValue.symbolic_object!
+      };
+      
+      this._serviceBet.createBetMe(betRequest);
     }
   }
 }

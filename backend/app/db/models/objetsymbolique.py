@@ -1,8 +1,7 @@
 from enum import Enum as PyEnum
 
 class SymbolicObjectEnum(PyEnum):
-    couche = "Couche"
+    sucette = "Sucette"
     peluche = "Peluche"
-    tetine = "Tetine"
+    biberon = "Biberon"
     jouet = "Jouet"
-

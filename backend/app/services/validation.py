@@ -46,6 +46,13 @@ def is_medium_password(password: str) -> bool:
     )
 
 def validate_password_logic(password: str) -> dict:
+    # bcrypt limite les mots de passe à 72 bytes
+    if len(password.encode('utf-8')) > 72:
+        raise ValidationError(
+            field="password",
+            message="Le mot de passe ne peut pas dépasser 72 caractères."
+        )
+    
     if is_strong_password(password) or is_medium_password(password):
         return {"valid": True}
     

@@ -7,4 +7,4 @@ router = APIRouter()
 # Endpoint pour obtenir la liste des objets symboliques
 @router.get("/symbolic-objects", response_model=List[SymbolicObjectEnum])
 async def get_symbolic_objects():
-    return [SymbolicObjectEnum.couche, SymbolicObjectEnum.peluche, SymbolicObjectEnum.tetine, SymbolicObjectEnum.jouet]
+    return [SymbolicObjectEnum.sucette, SymbolicObjectEnum.peluche, SymbolicObjectEnum.biberon, SymbolicObjectEnum.jouet]
