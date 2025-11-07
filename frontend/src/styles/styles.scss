@@ -94,4 +94,43 @@ body {
   }
 }
 
+.animation-zone {
+  position: relative;
+  z-index: 1;
+}
+
+.coin {
+  z-index: 10;
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  //animation: fly-to-jar 10.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; /* Utilisation de la courbe personnalisée */
+  //animation: fly-to-jar 1.8s ease-in forwards;
+  animation: fly-to-jar 1.8s cubic-bezier(0.4, 0.0, 0.2, 1) forwards; /* Courbe plus douce */
+
+  svg {
+    display: block;
+    width: 20px;
+    height: auto;
+  }
+}
+@keyframes fly-to-jar {
+  0% {
+    opacity: 1;
+    transform: translate(calc(var(--translateX, 0px) * 0.1), calc(var(--translateY, 0px) * 0.1))
+      scale(1.1) rotate(5deg);
+  }
+
+  50% {
+    transform: translate(calc(var(--translateX, 0px) * 0.5), calc(var(--translateY, 0px) * 0.5))
+      scale(1) rotate(-5deg);
+  }
+
+  100% {
+    opacity: 0.8;
+    transform: translate(var(--endx), var(--endy)) scale(0.8) rotate(0deg);
+  }
+}
 

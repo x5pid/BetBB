@@ -9,7 +9,7 @@
               <div id="pct-boy">{{ distributionBoy() }}%</div>
             </div>
           <div class="progress-wrapper">
-            <div id="bar-boy" class="progress" style="width:50%"></div>
+            <div id="bar-boy" class="progress" #progressBarBoy></div>
           </div>
         </div>
         <div class="spacer"></div>
@@ -19,7 +19,7 @@
             <div id="pct-girl">{{ distributionGirl() }}%</div>
           </div>
           <div class="progress-wrapper">
-            <div id="bar-girl" class="progress" style="width:50%;background:linear-gradient(90deg,#ffb7d0,#ffd6e6)"></div>
+            <div id="bar-girl" class="progress" #progressBarGirl></div>
           </div>
         </div>
       </div>
@@ -36,7 +36,7 @@
     </div>
 
     <div class="stat">
-      <div class="small">Vos gains potentiels cumulés</div>
+      <div class="small">Vos gains potentiels</div>
       <div class="value" id="user-total-gains">{{potencial()}}</div>
     </div>
   </div>

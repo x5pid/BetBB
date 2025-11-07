@@ -107,7 +107,8 @@
   padding: 10px;
   border-radius: 12px;
   background: linear-gradient(180deg, var(--glass), transparent);
-  border: 1px solid rgba(140, 150, 180, 0.06);
+  // border: 1px solid rgba(140, 150, 180, 0.06);
+  border: 1px solid rgb(241 241 242);
 }
 
 @mixin stat-card {

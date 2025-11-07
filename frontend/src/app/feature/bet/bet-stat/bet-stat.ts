@@ -1,8 +1,8 @@
-import { AfterViewInit, Component, computed, inject, signal } from '@angular/core';
+import { AfterViewInit, Component, computed, effect, inject, signal, ViewChild } from '@angular/core';
 import { Chart, CategoryScale, LinearScale, Title, Tooltip, Legend, LineController, PointElement, LineElement, TimeScale, ScatterDataPoint } from 'chart.js'; // Importer les modules nécessaires
 import 'chartjs-adapter-date-fns'; // Importer l'adaptateur de date
 import { BetService } from '../../../core/services/bet.service';
-import { BetDistribution } from '../../../core/models/bet.model';
+import { BetDistribution, OddsSnapshot } from '../../../core/models/bet.model';
 
 @Component({
   selector: 'app-bet-stat',
@@ -11,6 +11,8 @@ import { BetDistribution } from '../../../core/models/bet.model';
   styleUrl: './bet-stat.scss'
 })
 export class BetStat implements AfterViewInit {
+  @ViewChild('progressBarBoy') progressBarBoy: any;
+  @ViewChild('progressBarGirl') progressBarGirl: any;
 
   private _serviceBet = inject(BetService);
   // Bet Stats
@@ -23,16 +25,16 @@ export class BetStat implements AfterViewInit {
   userBetStatsLoading = this._serviceBet.userBetStats?.loading;
 
   //Distribution
-  distributionBoy = computed(() => 
+  distributionBoy = computed(() =>
     this._betStats()?.distribution?.find((item: BetDistribution) => item.gender === 'Garçon')?.percentage ?? 0
   );
-  distributionGirl = computed(() => 
+  distributionGirl = computed(() =>
     this._betStats()?.distribution?.find((item: BetDistribution) => item.gender === 'Fille')?.percentage ?? 0
   );
   // Total
   total = computed(() => this._betStats()?.total_bets);
   //Last Bet
-  lastBet = computed(() => 
+  lastBet = computed(() =>
     `${this._betStats()?.last_bet?.gender} (${this._betStats()?.last_bet?.amount})`
   );
 
@@ -48,9 +50,17 @@ export class BetStat implements AfterViewInit {
     return amount * odds;
   });
 
-  constructor() {}
+  constructor() {
+    effect(() => {
+      const val = this.dataSignal();
+      if(this.chart && val){
+        this.updateChartData(val);
+      }
+    });
 
-  ngOnInit(): void {}
+    effect(() => this.updateProgressBar(this.progressBarBoy, this.distributionBoy() ?? 0));
+    effect(() => this.updateProgressBar(this.progressBarGirl, this.distributionGirl() ?? 0));
+  }
 
   ngAfterViewInit(): void {
     this.createChart();
@@ -83,7 +93,7 @@ export class BetStat implements AfterViewInit {
             {
               label: 'Garçon',
               data: this.dataSignal()?.map(d => ({
-                x: d.date,
+                x: d.datetime,
                 y: d.boy_odds
               } as unknown as ScatterDataPoint)) ?? [],
               borderColor: 'rgba(54, 162, 235, 1)',
@@ -93,7 +103,7 @@ export class BetStat implements AfterViewInit {
             {
               label: 'Fille',
               data: this.dataSignal()?.map(d => ({
-                x: d.date,
+                x: d.datetime,
                 y: d.girl_odds
               } as unknown as ScatterDataPoint)) ?? [],
               borderColor: 'rgba(255, 99, 132, 1)',
@@ -104,18 +114,34 @@ export class BetStat implements AfterViewInit {
         },
         options: {
           responsive: true,
+          // maintainAspectRatio: false,  // Permet de maintenir l'aspect ratio selon la largeur et la hauteur du conteneur
           scales: {
             x: {
               type: 'time', // 📅 Type d’échelle temporelle
               time: {
-                unit: 'minute', // ou 'second', 'hour', etc. → Chart.js choisira automatiquement si tu ne précises pas
+                unit: 'minute', // Unité de temps (minute, heure, jour, etc.)
                 displayFormats: {
-                  minute: 'HH:mm:ss',
+                  minute: 'yyyy-MM-dd HH:mm', // Format complet avec date et heure
+                  hour: 'yyyy-MM-dd HH:mm',   // Si tu choisis 'hour', montre aussi l'heure complète
                 },
               },
               title: {
                 display: true,
                 text: 'Date / Heure',
+              },
+              ticks: {
+                //source: 'data',  // Les ticks seront basés sur les données, pas sur l'échelle
+                autoSkip: true,   // Évite les labels trop serrés
+                // maxRotation: 0,   // Garder les labels à plat (sans rotation)
+                // minRotation: 0,   // Pareil ici, pour une lecture plus claire
+                maxTicksLimit: 10,  // Limite le nombre de ticks affichés à 10
+                major: {
+                  enabled: true,  // Afficher les ticks majeurs
+                },
+              },
+              grid: {
+                display: true,  // Affiche la grille
+                drawOnChartArea: true,  // La grille sera dessinée uniquement là où il y a des données
               },
             },
             y: {
@@ -125,6 +151,9 @@ export class BetStat implements AfterViewInit {
                 display: true,
                 text: 'Odds',
               },
+              grid: {
+                display: true,  // Afficher la grille des ordonnées
+              },
             },
           },
         },
@@ -132,11 +161,16 @@ export class BetStat implements AfterViewInit {
     }
   }
 
-  updateChartData(data: { datetime: string; boy_odds: number; girl_odds: number }[]): void {
+  updateChartData(data: OddsSnapshot[]): void {
     // Mise à jour des datasets avec les nouvelles données
     this.chart.data.datasets[0].data = data.map(d => ({ x: d.datetime, y: d.boy_odds } as unknown as ScatterDataPoint));
     this.chart.data.datasets[1].data = data.map(d => ({ x: d.datetime, y: d.girl_odds } as unknown as ScatterDataPoint));
     this.chart.update();
   }
 
+  updateProgressBar(progressBar:any, width : number) {
+    if (progressBar) {
+      progressBar.nativeElement.style.width = `${width}%`; // Modifie le style width
+    }
+  }
 }

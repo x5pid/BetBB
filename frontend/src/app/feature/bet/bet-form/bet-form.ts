@@ -41,14 +41,14 @@ export class BetForm {
   symbolicObjectWithClass = computed(() => {
     const objects = this._symbolicObjectData();
     if (!objects) return [];
-    
+
     const iconMap: { [key: string]: string } = {
       'Peluche': '🧸',
       'Sucette': '🍭',
       'Biberon': '🍼',
       'Jouet': '🎠'
     };
-    
+
     return objects.map(object => ({
       value: object,
       icon: iconMap[object] || ''
@@ -96,6 +96,7 @@ export class BetForm {
   totalBoy = computed(() => this._betStats()?.boy_total ?? 0);
   totalGirl = computed(() => this._betStats()?.girl_total ?? 0);
   userTotal = computed(() => this._userBetStats()?.amount ?? 0);
+  userGender = computed(() => this._userBetStats()?.gender ?? '_');
 
   // Form
   userStake = signal(5) ;
@@ -106,7 +107,7 @@ export class BetForm {
     const userStake = this.userStake();
     if(userStake && userStake > 0){
       const odds = this.selectedChoiceBebe() == 'boy' ? this.oddsBoy() : this.oddsGirl() ;
-      return userStake * odds;
+      return (userStake * odds).toFixed(2);
     }
     return 0;
   });
@@ -129,7 +130,7 @@ export class BetForm {
         gender: formValue.gender!,
         symbolic_object: formValue.symbolic_object!
       };
-      
+
       this._serviceBet.createBetMe(betRequest);
     }
   }

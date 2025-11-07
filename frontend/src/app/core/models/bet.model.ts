@@ -33,7 +33,7 @@ export interface BetUserResponse {
 }
 
 export interface OddsSnapshot {
-  date: string;
+  datetime: string;
   boy_odds: number;
   girl_odds: number;
 }
