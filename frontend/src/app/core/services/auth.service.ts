@@ -79,6 +79,7 @@ export class AuthService {
 
   logout() {
     this._token.reset();
+    this._tokenService.removeToken();
   }
 
   register(payload: RegisterPayload) {

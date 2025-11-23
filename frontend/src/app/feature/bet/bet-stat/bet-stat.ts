@@ -34,9 +34,11 @@ export class BetStat implements AfterViewInit {
   // Total
   total = computed(() => this._betStats()?.total_bets);
   //Last Bet
-  lastBet = computed(() =>
-    `${this._betStats()?.last_bet?.gender} (${this._betStats()?.last_bet?.amount})`
-  );
+  lastBet = computed(() =>{
+    const gender = this._betStats()?.last_bet?.gender;
+    const amount = this._betStats()?.last_bet?.amount;
+    return gender && amount ? `${gender} (${amount})` : '';
+  });
 
   // Odds
   oddsBoy = computed(() => this._betStats()?.boy_odds ?? 1.00);

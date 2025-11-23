@@ -7,6 +7,7 @@
   background: linear-gradient(180deg, var(--bg-bet), #f7fbff 70%);
   align-items: center;
   height: 100%;
+  position: relative;
 }
 
 .bet-header {
@@ -14,4 +15,29 @@
   justify-content: center;
   gap: 20px;
   align-items: baseline;
+}
+
+.action-icons {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+  display: flex;
+  gap: 8px;
+}
+
+.info-icon,
+.logout-icon {
+  color: rgba(0, 0, 0, 0.6);
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: rgba(0, 0, 0, 0.9);
+  }
+
+  mat-icon {
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+  }
 }

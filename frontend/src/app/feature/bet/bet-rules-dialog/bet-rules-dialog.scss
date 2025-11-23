@@ -1,0 +1,24 @@
+.rules-dialog {
+  min-width: 400px;
+  max-width: 500px;
+}
+
+.rules-content {
+  padding: 16px 0;
+  
+  p {
+    margin: 0 0 16px 0;
+    line-height: 1.6;
+  }
+  
+  ul {
+    margin: 16px 0;
+    padding-left: 24px;
+    
+    li {
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+  }
+}
+

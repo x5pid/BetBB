@@ -7,6 +7,15 @@
     <app-bet-form></app-bet-form>
     <app-bet-stat></app-bet-stat>
   </article>
+  <div class="action-icons">
+    <button class="info-icon" mat-icon-button (click)="openRulesDialog()" matTooltip="Règles" aria-label="Règles du jeu">
+      <mat-icon>info</mat-icon>
+    </button>
+    <button class="logout-icon" mat-icon-button (click)="logout()" matTooltip="Déconnexion" aria-label="Déconnexion">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </div>
 </div>
+
 
 
