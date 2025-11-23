@@ -38,6 +38,12 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'results',
+    loadComponent: () =>
+      import('./feature/bet-results/bet-results').then(m => m.BetResults),
+    canActivate: [AuthGuard],
+  },
+  {
     path: '**',
     component: NotFoundComponent,
     canActivate: [AuthGuard],

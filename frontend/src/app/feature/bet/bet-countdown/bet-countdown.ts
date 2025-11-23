@@ -1,6 +1,7 @@
-import { Component, OnInit, OnDestroy, signal, computed } from '@angular/core';
+import { Component, OnInit, OnDestroy, signal, computed, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-bet-countdown',
@@ -10,11 +11,14 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './bet-countdown.scss'
 })
 export class BetCountdown implements OnInit, OnDestroy {
+  private _router = inject(Router);
+  
   // Date de fin des paris (à configurer ou récupérer depuis le backend)
   // Format: Date ISO string ou timestamp
   private readonly endDate = new Date('2025-12-31T23:59:59').getTime();
   
   private intervalId?: number;
+  private hasRedirected = false;
   
   timeRemaining = signal<number>(0);
   
@@ -25,6 +29,18 @@ export class BetCountdown implements OnInit, OnDestroy {
   
   isExpired = computed(() => this.timeRemaining() <= 0);
   isUrgent = computed(() => this.timeRemaining() < 24 * 60 * 60 * 1000); // Moins de 24h
+
+  constructor() {
+    // Rediriger vers la page de résultats quand le countdown expire
+    effect(() => {
+      if (this.isExpired() && !this.hasRedirected) {
+        this.hasRedirected = true;
+        setTimeout(() => {
+          this._router.navigate(['/results']);
+        }, 2000); // Attendre 2 secondes avant de rediriger
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.updateCountdown();

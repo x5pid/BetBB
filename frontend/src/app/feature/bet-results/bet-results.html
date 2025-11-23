@@ -1,0 +1,74 @@
+<div class="results-page">
+  @if (loading()) {
+    <div class="loading-container">
+      <div class="spinner"></div>
+      <p>Calcul des résultats en cours...</p>
+    </div>
+  } @else {
+    <div class="results-container">
+      <header class="results-header">
+        <h1>🎉 Résultats des paris 🎉</h1>
+        <p class="subtitle">Les paris sont terminés !</p>
+      </header>
+
+      @if (winner(); as winnerData) {
+        <div class="winner-announcement" [class.boy-winner]="winnerData.gender === 'Garçon'" [class.girl-winner]="winnerData.gender === 'Fille'">
+          <div class="winner-icon">
+            @if (winnerData.gender === 'Garçon') {
+              <span class="emoji-large">👶</span>
+            } @else {
+              <span class="emoji-large">👧</span>
+            }
+          </div>
+          <h2 class="winner-title">Le gagnant est : {{ winnerData.gender }} !</h2>
+          <div class="winner-stats">
+            <div class="stat-item">
+              <span class="stat-label">Total des mises</span>
+              <span class="stat-value">${{ winnerData.totalAmount | number:'1.2-2' }}</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Nombre de paris gagnants</span>
+              <span class="stat-value">{{ winnerData.winnerCount }}</span>
+            </div>
+          </div>
+        </div>
+
+        @if (userBet() && userBet()!.length > 0) {
+          <div class="user-result" [class.user-won]="userWon()" [class.user-lost]="!userWon()">
+            <h3>Votre résultat</h3>
+            @if (userWon()) {
+              <div class="result-success">
+                <mat-icon class="success-icon">celebration</mat-icon>
+                <p class="result-message">Félicitations ! Vous avez gagné ! 🎊</p>
+                <p class="result-gain">Votre gain : <strong>${{ userGain() | number:'1.2-2' }}</strong></p>
+              </div>
+            } @else {
+              <div class="result-failure">
+                <mat-icon class="failure-icon">sentiment_dissatisfied</mat-icon>
+                <p class="result-message">Dommage, vous avez perdu cette fois.</p>
+                <p class="result-info">Vous aviez parié sur : <strong>{{ userBet()![0].gender }}</strong></p>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="no-bet-message">
+            <mat-icon>info</mat-icon>
+            <p>Vous n'avez pas participé à ce pari.</p>
+          </div>
+        }
+
+        <div class="results-actions">
+          <button mat-raised-button color="primary" (click)="goToBet()">
+            <mat-icon>arrow_back</mat-icon>
+            Retour aux paris
+          </button>
+          <button mat-button (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            Déconnexion
+          </button>
+        </div>
+      }
+    </div>
+  }
+</div>
+
