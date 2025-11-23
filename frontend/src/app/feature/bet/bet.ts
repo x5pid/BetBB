@@ -3,6 +3,7 @@ import { BetForm } from './bet-form/bet-form';
 import { BetStat } from './bet-stat/bet-stat';
 import { BetSvgBebe } from './bet-svg-bebe/bet-svg-bebe';
 import { BetSvgPig } from './bet-svg-pig/bet-svg-pig';
+import { BetCountdown } from './bet-countdown/bet-countdown';
 import { BetService } from '../../core/services/bet.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -21,6 +22,7 @@ import { TutorialOverlay } from '../../shared/components/tutorial-overlay/tutori
     BetStat,
     BetSvgBebe,
     BetSvgPig,
+    BetCountdown,
     MatIconModule,
     MatButtonModule,
     MatTooltipModule,

@@ -1,0 +1,31 @@
+<div class="countdown-container" [class.urgent]="isUrgent()" [class.expired]="isExpired()">
+  <mat-icon class="countdown-icon">schedule</mat-icon>
+  <div class="countdown-content">
+    <span class="countdown-label">Fin des paris dans :</span>
+    @if (isExpired()) {
+      <span class="countdown-expired">Les paris sont terminés</span>
+    } @else {
+      <div class="countdown-time">
+        @if (days() > 0) {
+          <span class="time-unit">
+            <span class="time-value">{{ days() }}</span>
+            <span class="time-label">{{ days() === 1 ? 'jour' : 'jours' }}</span>
+          </span>
+        }
+        <span class="time-unit">
+          <span class="time-value">{{ hours() | number:'2.0-0' }}</span>
+          <span class="time-label">h</span>
+        </span>
+        <span class="time-unit">
+          <span class="time-value">{{ minutes() | number:'2.0-0' }}</span>
+          <span class="time-label">min</span>
+        </span>
+        <span class="time-unit">
+          <span class="time-value">{{ seconds() | number:'2.0-0' }}</span>
+          <span class="time-label">s</span>
+        </span>
+      </div>
+    }
+  </div>
+</div>
+
