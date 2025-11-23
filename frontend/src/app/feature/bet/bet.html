@@ -8,6 +8,9 @@
     <app-bet-stat></app-bet-stat>
   </article>
   <div class="action-icons">
+    <button class="tutorial-icon" mat-icon-button (click)="startTutorial()" matTooltip="Tutoriel" aria-label="Démarrer le tutoriel">
+      <mat-icon>school</mat-icon>
+    </button>
     <button class="info-icon" mat-icon-button (click)="openRulesDialog()" matTooltip="Règles" aria-label="Règles du jeu">
       <mat-icon>info</mat-icon>
     </button>
@@ -15,6 +18,7 @@
       <mat-icon>logout</mat-icon>
     </button>
   </div>
+  <app-tutorial-overlay></app-tutorial-overlay>
 </div>
 
 

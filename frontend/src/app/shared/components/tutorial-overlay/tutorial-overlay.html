@@ -1,0 +1,74 @@
+@if (isActive()) {
+  <div class="tutorial-overlay">
+    <!-- Overlay gris semi-transparent avec découpe -->
+    <svg class="overlay-svg" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <mask id="tutorial-mask">
+          <rect width="100%" height="100%" fill="white"/>
+          <rect
+            [attr.x]="highlightPosition.left"
+            [attr.y]="highlightPosition.top"
+            [attr.width]="highlightPosition.width"
+            [attr.height]="highlightPosition.height"
+            fill="black"
+            rx="8"/>
+        </mask>
+      </defs>
+      <rect width="100%" height="100%" fill="rgba(0, 0, 0, 0.7)" mask="url(#tutorial-mask)"/>
+    </svg>
+    
+    <!-- Zone de surbrillance avec bordure -->
+    <div 
+      class="highlight-box"
+      [style.top.px]="highlightPosition.top"
+      [style.left.px]="highlightPosition.left"
+      [style.width.px]="highlightPosition.width"
+      [style.height.px]="highlightPosition.height"
+      #highlightBox>
+    </div>
+
+    <!-- Bulle d'explication -->
+    @if (currentStep(); as step) {
+      <div 
+        class="tutorial-tooltip"
+        [style.top.px]="tooltipPosition.top"
+        [style.left.px]="tooltipPosition.left"
+        #tooltip>
+        <div class="tooltip-header">
+          <h3>{{ step.title }}</h3>
+          <button class="btn-close" (click)="stop()" aria-label="Fermer le tutoriel">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <div class="tooltip-content">
+          <p [innerHTML]="step.description"></p>
+        </div>
+        <div class="tooltip-actions">
+          <span class="step-counter">
+            Étape {{ currentStepIndex() + 1 }} / {{ totalSteps() }}
+          </span>
+          <div class="navigation-buttons">
+            @if (!isFirstStep()) {
+              <button class="btn-previous" (click)="previous()">
+                Précédent
+              </button>
+            }
+            @if (isLastStep()) {
+              <button class="btn-finish" (click)="stop()">
+                Terminer
+              </button>
+            } @else {
+              <button class="btn-next" (click)="next()">
+                Suivant
+              </button>
+            }
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+}
+
