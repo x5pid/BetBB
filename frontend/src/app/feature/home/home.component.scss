@@ -24,3 +24,49 @@
 .section {
     padding: 20px;
 }
+
+
+.btn-filled {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ff4d79; /* bleu Material */
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    position: relative; /* nécessaire pour positionner le point */
+}
+
+/* Le point rond */
+.btn-round-point::before {
+  content: "";
+  position: absolute;
+  left: 8px;          /* distance depuis le bord gauche */
+  top: 50%;           /* centré verticalement */
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%; /* cercle parfait */
+}
+.round-point-pink::before {
+  background-color: #ff2f63;
+}
+
+
+.btn-filled:hover {
+  background-color: #ff2f63; /* bleu plus foncé au survol */
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.btn-filled:active {
+  background-color: #ff2f63; /* encore plus foncé au clic */
+  box-shadow: 0 2px 3px rgba(0,0,0,0.2);
+}
+
+
+
