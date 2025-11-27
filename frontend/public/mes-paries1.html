@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mes paris</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    background: #f4f4f8;
+}
+
+/* HEADER */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 15px 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.logout {
+    background: #ff4d79;
+    color: white;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+}
+.logout:hover { background: #ff2f63; }
+
+/* LIST */
+.container {
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.card h3 { margin: 0; }
+.card small { color: #555; }
+
+.btn {
+    margin-top: 12px;
+    width: 100%;
+    padding: 12px;
+    background: #6c7bff;
+    border: none;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.btn:hover { background:#5a69e6; }
+</style>
+
+</head>
+<body>
+
+<div class="header">
+    <h2>Mes paris</h2>
+    <button class="logout" onclick="logout()">Déconnexion</button>
+</div>
+
+<div class="container">
+
+    <div class="card">
+        <h3>Pari bébé (En cours)</h3>
+        <small>35€ sur Garçon</small>
+        <button class="btn" onclick="location.href='pari.html'">Voir le pari</button>
+    </div>
+
+    <div class="card">
+        <h3>Historique : modification</h3>
+        <small>20€ sur Garçon → mis le 14/02</small>
+    </div>
+
+    <div class="card">
+        <h3>Historique : modification</h3>
+        <small>10€ sur Garçon → mis le 12/02</small>
+    </div>
+
+</div>
+
+<script>
+function logout() {
+    location.href = "index.html";
+}
+</script>
+
+</body>
+</html>
