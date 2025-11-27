@@ -7,6 +7,12 @@ import { NotAuthGuard } from './core/guards/no-auth.guard';
 export const routes: Routes = [
   // Public Routes
   {
+    path: '',
+    loadComponent: () =>
+      import('./feature/home/home.component').then(m => m.HomeComponent),
+      canActivate: [NotAuthGuard],
+  },
+  {
     path: 'login',
     loadComponent: () =>
       import('./feature/login/login.component').then(m => m.LoginComponent),
