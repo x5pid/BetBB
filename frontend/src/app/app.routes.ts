@@ -39,9 +39,21 @@ export const routes: Routes = [
   // Private Routes
   {
     path: 'bet',
+    canActivate: [AuthGuard],
     loadComponent: () =>
       import('./feature/bet/bet').then(m => m.Bet),
-    canActivate: [AuthGuard],
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import('./feature/bet/bet-detail/bet-detail').then(m => m.BetDetail)
+      },
+      {
+        path: 'history',
+        loadComponent: () =>
+          import('./feature/bet/bet-history/bet-history').then(m => m.BetHistory)
+      }
+    ]
   },
   {
     path: 'results',

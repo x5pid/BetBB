@@ -9,15 +9,21 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { BetRulesDialog } from './bet-rules-dialog/bet-rules-dialog';
 import { AuthService } from '../../core/services/auth.service';
 import { TutorialService } from '../../core/services/tutorial.service';
 import { TutorialOverlay } from '../../shared/components/tutorial-overlay/tutorial-overlay';
+import {
+  MatBottomSheet,
+  MatBottomSheetModule,
+  MatBottomSheetRef,
+} from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-bet',
   imports: [
+    RouterOutlet,
     BetForm,
     BetStat,
     BetSvgBebe,
@@ -27,6 +33,7 @@ import { TutorialOverlay } from '../../shared/components/tutorial-overlay/tutori
     MatButtonModule,
     MatTooltipModule,
     TutorialOverlay,
+    MatBottomSheetModule
   ],
   templateUrl: './bet.html',
   styleUrl: './bet.scss'
@@ -37,6 +44,9 @@ export class Bet {
   private _router = inject(Router);
   private _authService = inject(AuthService);
   private _tutorialService = inject(TutorialService);
+  private _bottomSheet = inject(MatBottomSheet);
+
+
   private _rulesDialogOpened = false;
 
   betMe = this._serviceBet.bet;
@@ -64,7 +74,7 @@ export class Bet {
     effect(() => {
       const loading = this.betMeLoading();
       const data = this.betMeData();
-      
+
       // Attendre que le chargement soit terminé et vérifier si l'utilisateur n'a pas joué
       if (!loading && data !== undefined && !this._rulesDialogOpened) {
         const hasPlayed = data && Array.isArray(data) && data.length > 0;
@@ -157,5 +167,9 @@ export class Bet {
         position: 'top'
       }
     ]);
+  }
+
+  openSheet(){
+    this._bottomSheet.open(BetForm);
   }
 }

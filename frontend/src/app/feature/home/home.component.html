@@ -1,51 +1,33 @@
 <div>
-  <div class="hero">
-      <header style="display: flex;justify-content: space-between;">
-        <div class="logo">Logo</div>
-        <nav style="gap: 10px; display: flex;">
-          <a href="#" class="btn-filled btn-round-point">Sign In</a>
-          <a href="#" class="btn-filled btn-round-point round-point-pink" style=" background: #ffffff; color: black;">Sign Up</a>
-        </nav>
-      </header>
-
-      <section>
-        <h2 style="margin-bottom: 0;">NEW GAME</h2>
-        <h1 style="margin-top: 0;font-size: 50px;">NEW BET</h1>
-        <p style="font-size: 15px;margin: 0px;">Feel the adrenaline of the Baby Bet game and multiply your bets to the skies!</p>
-      </section>
+  <div class="bandeau">
+    <header>
+      <div class="logo">Logo</div>
+      <nav>
+        <a href="login" class="btn-filled btn-round-point">Sign In</a>
+        <a href="register" class="btn-filled btn-round-point round-point-pink sign-up">Sign Up</a>
+      </nav>
+    </header>
+    <section>
+      <h2 class="mb-0">NEW GAME</h2>
+      <h1 class="mt-0 fs-50">NEW BET</h1>
+      <p class="m-0 fs-15">Feel the adrenaline of the Baby Bet game and multiply your bets to the skies!</p>
+    </section>
   </div>
-  
 
-  <!-- <img src="baby1.jpg"> -->
-
-  <section class="info-section" style="    display: flex;
-    gap: 50px;
-    margin-top: 25px;
-    padding: 0px 40px;">
+  <section class="info-section">
     <div>
-      <h3 style="font-size: 19px;font-weight: 500; margin: 0;">GAME TYPE<br><strong>BETBABY GAME</strong></h3>
+      <h3>GAME TYPE<br><strong>BETBABY GAME</strong></h3>
     </div>
-    <div style="padding: 0 50px;border-left: solid 2px #737378;">
-      <h3 style="font-size: 19px;font-weight: 500;margin: 0">RTP<br><strong>98%</strong></h3>
+    <div class="info-section-data">
+      <h3>RTP<br><strong>98%</strong></h3>
     </div>
   </section>
 
-  <div class="section" style="display: flex;flex-direction: column; align-items: center;">
+  <div class="countdown-section">
     <h2>GAME END IN</h2>
     <app-countdown></app-countdown>
-    <div></div>
-
-
-  <div class="border-3" style="padding: 5px;margin-top: 25px;
-    border: 2px solid rgb(255 77 121);
-    border-radius: 27px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);display: inline-block;">
-      <button class="btn-filled" style="border: none;
-          font-size: 20px;
-          padding: 10px 30px;
-        ">Join Us</button>
+    <div class="sub-border">
+      <button class="btn-filled" (click)="goToPage()">Join Us</button>
     </div>
-  </div>  
-
-
+  </div>
 </div>

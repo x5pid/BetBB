@@ -1,12 +1,80 @@
-
-.hero {
+// Margin
+.m-0 {
+  margin: 0;
+}
+.mb-0 {
+  margin-bottom: 0;
+}
+.mt-0 {
+  margin-top: 0;
+}
+// Font-Size
+.fs-50 {
+  font-size: 50px;
+}
+.fs-19 {
+  font-size: 19px;
+}
+.fs-15 {
+  font-size: 15px;
+}
+// Font-Weight
+.fw-500 {
+  font-weight: 500;
+}
+// Bandeau
+.bandeau {
     padding: 40px 20px;
     background: linear-gradient(135deg, #ffd1e8, #d1e8ff);
+  header {
+    display: flex;
+    justify-content: space-between;
+
+    nav {
+      gap: 10px;
+      display: flex;
+      .sign-up{
+         background: #ffffff;
+         color: black;
+      }
+    }
+  }
 }
 
-.hero img {
-    width: 150px;
-    margin-bottom: 20px;
+.info-section {
+  display: flex;
+  gap: 50px;
+  margin-top: 25px;
+  padding: 0px 40px;
+
+  &-data {
+    padding: 0 50px;
+    border-left: solid 2px #737378;
+  }
+  h3 {
+    font-weight: 500;
+    font-size: 19px;
+    margin: 0;
+  }
+}
+
+.countdown-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .sub-border {
+    padding: 5px;margin-top: 25px;
+    border: 2px solid rgb(255 77 121);
+    border-radius: 27px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    display: inline-block;
+    button {
+      border: none;
+      font-size: 20px;
+      padding: 10px 30px;
+    }
+  }
 }
 
 .btn {
