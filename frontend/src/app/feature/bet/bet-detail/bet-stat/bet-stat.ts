@@ -3,10 +3,13 @@ import { Chart, CategoryScale, LinearScale, Title, Tooltip, Legend, LineControll
 import 'chartjs-adapter-date-fns'; // Importer l'adaptateur de date
 import { BetService } from '../../../../core/services/bet.service';
 import { BetDistribution, OddsSnapshot } from '../../../../core/models/bet.model';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-bet-stat',
-  imports: [],
+  imports: [
+    DecimalPipe
+  ],
   templateUrl: './bet-stat.html',
   styleUrl: './bet-stat.scss'
 })
@@ -43,6 +46,10 @@ export class BetStat implements AfterViewInit {
   // Odds
   oddsBoy = computed(() => this._betStats()?.boy_odds ?? 1.00);
   oddsGirl = computed(() => this._betStats()?.girl_odds ?? 1.00);
+  // Total
+  totalBoy = computed(() => this._betStats()?.boy_total ?? 0);
+  totalGirl = computed(() => this._betStats()?.girl_total ?? 0);
+
   //Potential
   potencial = computed(() => {
     const stats = this._userBetStats();

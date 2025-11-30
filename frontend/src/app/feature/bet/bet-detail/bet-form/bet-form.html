@@ -7,40 +7,6 @@
     </div>
   </header>
 
-  <div class="options">
-    <!-- ME -->
-     <!-- <div class="test">
-        <span style=" font-weight: 700;">$</span>
-        <span style="font-weight: 700;font-size: 20px;">{{userTotal()| number:'1.0-0'}}</span>
-        <span style="font-weight: 700;font-size: 20px;">.</span>
-        <span style="font-size: 15px;color: grey;margin-left: -3px;">
-          {{ (userTotal() % 1) | number:'1.2-2' | slice:2 }}
-        </span>
-        <span style=" font-weight: 700;font-size: 20px;margin: 0 5px 0 3px;">/</span>
-        <span style="font-weight: 700;font-size: 18px;">{{userGender()}}</span>
-        <span class="gradient-text">Votre parie :</span>
-     </div> -->
-
-    <!-- BOY -->
-    <div class="option" id="opt-boy">
-      <div class="icon" style="background:linear-gradient(135deg,#d6f0ff,#cfe9ff)">🍼</div>
-      <div class="meta">
-        <div>Garçon</div>
-        <div class="small">Mises totales : <span id="total-boy">{{ totalBoy() }}</span></div>
-      </div>
-      <div class="odds" id="odds-boy">{{ oddsBoy() | number:'1.2-2' }}x</div>
-    </div>
-    <!-- GIRL -->
-    <div class="option" id="opt-girl">
-      <div class="icon" style="background:linear-gradient(135deg,#ffd6e6,#ffdcec)">🧸</div>
-      <div class="meta">
-        <div>Fille</div>
-        <div class="small">Mises totales : <span id="total-girl">{{ totalGirl() }}</span></div>
-      </div>
-      <div class="odds" id="odds-girl">{{ oddsGirl() | number:'1.2-2' }}x</div>
-    </div>
-  </div>
-
   <ui-form id="betForm" [formGroup]="form" (submit)="onSubmit()">
     <div class="betForm-fields" form-fields>
       <label class="label">Choisir un objet symbolique</label>

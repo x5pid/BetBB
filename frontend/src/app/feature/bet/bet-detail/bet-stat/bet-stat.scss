@@ -7,6 +7,51 @@
   @include card;
   height: 100%;
   margin: 0 20px;
+
+  header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .logo {
+    width: 64px;
+    height: 64px;
+    border-radius: 14px;
+    @include flex-center;
+    font-size: 28px;
+    background: linear-gradient(135deg, var(--bet-blue), var(--bet-pink));
+    color: white;
+    box-shadow: 0 6px 18px rgba(160, 170, 200, 0.18);
+  }
+
+  .options {
+    @include flex-column;
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .option {
+    @include option-card;
+  }
+
+  .icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    @include flex-center;
+    font-size: 22px;
+  }
+
+  .meta {
+    flex: 1;
+  }
+
+  .odds {
+    font-weight: 700;
+  }
+
   .stats {
     display: flex;
     gap: 12px;
@@ -85,4 +130,19 @@
     text-align: center;
     margin-top: 10px;
   }
+}
+
+#opt-boy{
+  position: relative;
+}
+#opt-boy::before {
+  content: "Cotes";
+  position: absolute;
+  top: -12px;
+  right: -8px;
+  transform: translate(-50%, -50%);
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.4;
+  font-weight: 500;
 }
