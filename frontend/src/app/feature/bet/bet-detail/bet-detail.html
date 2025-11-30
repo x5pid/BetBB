@@ -1,1 +1,23 @@
-<p>bet-detail</p>
+<div class="bet-detail">
+    <app-bet-stat></app-bet-stat>
+    
+    <div class="card" style="
+    width: 60%;
+    margin: auto;
+    margin-top: 20px;">
+        <h3>Mon pari</h3>
+    
+        <div class="my-bet" id="myBetBox" style="display:none;">
+            <strong id="betText"></strong>
+            <br><br>
+            <button class="btn" (click)="openSheet()">Modifier mon pari</button>
+            <button class="btn secondary" onclick="location.href='mes-paris.html'">Voir l’historique</button>
+        </div>
+    
+        <div id="noBetBox">
+            <p>Tu n'as pas encore parié 😄</p>
+            <button class="btn" (click)="openSheet()">Faire un pari</button>
+        </div>
+    </div>
+</div>
+

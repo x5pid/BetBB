@@ -24,12 +24,18 @@
 }
 // Bandeau
 .bandeau {
-    padding: 40px 20px;
-    background: linear-gradient(135deg, #ffd1e8, #d1e8ff);
+  padding: 5px 25px 20px 25px;
+  background: url('../../../../public/nube.png'),linear-gradient(135deg, #ffd1e8, #d1e8ff);
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  
+  //background-image: url('../../../../public/nube.png');
+  background-size: contain;
+
   header {
     display: flex;
     justify-content: space-between;
-
+    align-items: center;
     nav {
       gap: 10px;
       display: flex;

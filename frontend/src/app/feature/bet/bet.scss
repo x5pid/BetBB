@@ -1,12 +1,15 @@
-/* HEADER STYLÉ */
-.header {
+.bet-page {
+  background: linear-gradient(135deg, #ffe2ec, #dce7ff);
+  height: 100%;
+}
+
+.bet-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     background: white;
     padding: 15px 20px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    width: 100%;
 
     &-left {
       display: flex;
@@ -17,77 +20,6 @@
       }
     }
 }
-
-.logout {
-    background: #ff4d79;
-    border: none;
-    color: white;
-    padding: 10px 14px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.9rem;
-}
-.logout:hover { background: #ff2f63; }
-
-.title {
-    margin-top: 5px;
-    font-size: 1.1rem;
-    font-weight: 600;
-}
-
-.timer {
-    font-size: 0.9rem;
-    color: #333;
-}
-
-/* CARD STYLE */
-.card {
-    background: white;
-    margin: 20px;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-/* GRAPH */
-.graph {
-    height: 200px;
-    background: linear-gradient(135deg, #ffe2ec, #dce7ff);
-    border-radius: 15px;
-    margin-top: 10px;
-}
-
-/* MON PARI */
-.my-bet {
-    padding: 15px;
-    border-radius: 10px;
-    background: #f9f9ff;
-    border: 1px solid #ddd;
-}
-
-.my-bet strong {
-    font-size: 1.1rem;
-}
-
-/* BUTTONS */
-.btn {
-    display: inline-block;
-    padding: 12px 18px;
-    background: #4CAF50;
-    color: white;
-    text-align: center;
-    border-radius: 10px;
-    margin-top: 12px;
-    cursor: pointer;
-    border: none;
-    font-size: 1rem;
-}
-.btn:hover { background: #3e9a44; }
-
-.secondary {
-    background: #6c7bff;
-}
-.secondary:hover { background: #5a69e6; }
 
 .action-icons {
   display: flex;

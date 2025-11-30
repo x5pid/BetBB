@@ -1,13 +1,11 @@
 import { Component, inject } from "@angular/core";
-import { Countdown } from "../countdown/countdown";
-import { MatButton } from "@angular/material/button";
+import { Countdown } from "../../shared/components/countdown/countdown";
 import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-home',
   imports: [
     Countdown,
-    MatButton
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'

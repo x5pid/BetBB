@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, computed, effect, inject, signal, ViewChild } from '@angular/core';
 import { Chart, CategoryScale, LinearScale, Title, Tooltip, Legend, LineController, PointElement, LineElement, TimeScale, ScatterDataPoint } from 'chart.js'; // Importer les modules nécessaires
 import 'chartjs-adapter-date-fns'; // Importer l'adaptateur de date
-import { BetService } from '../../../core/services/bet.service';
-import { BetDistribution, OddsSnapshot } from '../../../core/models/bet.model';
+import { BetService } from '../../../../core/services/bet.service';
+import { BetDistribution, OddsSnapshot } from '../../../../core/models/bet.model';
 
 @Component({
   selector: 'app-bet-stat',

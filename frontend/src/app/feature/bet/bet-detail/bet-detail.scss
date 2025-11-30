@@ -1,0 +1,41 @@
+/* CARD STYLE */
+.card {
+    background: white;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* MON PARI */
+.my-bet {
+    padding: 15px;
+    border-radius: 10px;
+    background: #f9f9ff;
+    border: 1px solid #ddd;
+
+    strong {
+        font-size: 1.1rem;
+    }
+}
+
+
+/* BUTTONS */
+.btn {
+    display: inline-block;
+    padding: 12px 18px;
+    background: #4CAF50;
+    color: white;
+    text-align: center;
+    border-radius: 10px;
+    margin-top: 12px;
+    cursor: pointer;
+    border: none;
+    font-size: 1rem;
+}
+.btn:hover { background: #3e9a44; }
+
+.secondary {
+    background: #6c7bff;
+}
+.secondary:hover { background: #5a69e6; }

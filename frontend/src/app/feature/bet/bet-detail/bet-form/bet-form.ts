@@ -2,12 +2,12 @@ import { Component, computed, effect, inject, input, signal } from '@angular/cor
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { CoinDropDirective } from './coin-drop.directive';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { BetService } from '../../../core/services/bet.service';
-import { CreateBetRequest } from '../../../core/models/bet.model';
-import { CardComponent } from '../../../shared/ui/card/card.component';
-import { ButtonComponent } from '../../../shared/ui/button/button.component';
-import { InputComponent } from '../../../shared/ui/input/input.component';
-import { FormComponent } from '../../../shared/ui/form/form.component';
+import { BetService } from '../../../../core/services/bet.service';
+import { CreateBetRequest } from '../../../../core/models/bet.model';
+import { CardComponent } from '../../../../shared/ui/card/card.component';
+import { ButtonComponent } from '../../../../shared/ui/button/button.component';
+import { InputComponent } from '../../../../shared/ui/input/input.component';
+import { FormComponent } from '../../../../shared/ui/form/form.component';
 
 @Component({
   selector: 'app-bet-form',

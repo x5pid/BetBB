@@ -4,9 +4,13 @@
   align-items: center;
   padding-top: 80px;
 
+  background-image: url('../../../../public/back.png');
+  background-size: contain;
+
   &__box {
     width: 100%;
     max-width: 460px;
+    position: relative;
   }
 
   &__title {

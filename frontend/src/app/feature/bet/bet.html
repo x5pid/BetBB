@@ -1,16 +1,12 @@
-<div style="
-  background: linear-gradient(135deg, #ffe2ec, #dce7ff);
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  align-items: center;">
-  <!-- HEADER -->
-  <div class="header">
-      <div class="header-left">
-        <img src="https://cdn-icons-png.flaticon.com/512/8090/8090403.png">
-        <app-bet-countdown></app-bet-countdown>
+<div class="bet-page">
+  <div class="bet-header">
+      <div class="bet-header-left" style="position: relative;">
+        <img src="icone.png" style="width: 80px">
       </div>
       <div class="action-icons">
+        <button class="tutorial-icon" mat-icon-button (click)="history()" matTooltip="History" aria-label="History">
+          <mat-icon>history</mat-icon>
+        </button>
         <button class="tutorial-icon" mat-icon-button (click)="startTutorial()" matTooltip="Tutoriel" aria-label="Démarrer le tutoriel">
           <mat-icon>school</mat-icon>
         </button>
@@ -22,29 +18,11 @@
         </button>
       </div>
   </div>
-  <app-bet-stat></app-bet-stat>
 
-  <!-- MON PARI (affiché après pari) -->
-  <div class="card">
-      <h3>Mon pari</h3>
-
-      <div class="my-bet" id="myBetBox" style="display:none;">
-          <strong id="betText"></strong>
-          <br><br>
-          <button class="btn" (click)="openSheet()">Modifier mon pari</button>
-          <button class="btn secondary" onclick="location.href='mes-paris.html'">Voir l’historique</button>
-      </div>
-
-      <div id="noBetBox">
-          <p>Tu n'as pas encore parié 😄</p>
-          <button class="btn" (click)="openSheet()">Faire un pari</button>
-      </div>
+  <div class="bet-body">
+    <router-outlet />
   </div>
 </div>
 
 
-
-
-
-<router-outlet />
 

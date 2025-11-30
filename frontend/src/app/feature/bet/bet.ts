@@ -1,8 +1,4 @@
 import { Component, computed, effect, inject, signal } from '@angular/core';
-import { BetForm } from './bet-form/bet-form';
-import { BetStat } from './bet-stat/bet-stat';
-import { BetSvgBebe } from './bet-svg-bebe/bet-svg-bebe';
-import { BetSvgPig } from './bet-svg-pig/bet-svg-pig';
 import { BetCountdown } from './bet-countdown/bet-countdown';
 import { BetService } from '../../core/services/bet.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -13,27 +9,15 @@ import { Router, RouterOutlet } from '@angular/router';
 import { BetRulesDialog } from './bet-rules-dialog/bet-rules-dialog';
 import { AuthService } from '../../core/services/auth.service';
 import { TutorialService } from '../../core/services/tutorial.service';
-import { TutorialOverlay } from '../../shared/components/tutorial-overlay/tutorial-overlay';
-import {
-  MatBottomSheet,
-  MatBottomSheetModule,
-  MatBottomSheetRef,
-} from '@angular/material/bottom-sheet';
+
 
 @Component({
   selector: 'app-bet',
   imports: [
     RouterOutlet,
-    BetForm,
-    BetStat,
-    BetSvgBebe,
-    BetSvgPig,
-    BetCountdown,
     MatIconModule,
     MatButtonModule,
-    MatTooltipModule,
-    TutorialOverlay,
-    MatBottomSheetModule
+    MatTooltipModule,    
   ],
   templateUrl: './bet.html',
   styleUrl: './bet.scss'
@@ -44,7 +28,6 @@ export class Bet {
   private _router = inject(Router);
   private _authService = inject(AuthService);
   private _tutorialService = inject(TutorialService);
-  private _bottomSheet = inject(MatBottomSheet);
 
 
   private _rulesDialogOpened = false;
@@ -169,7 +152,7 @@ export class Bet {
     ]);
   }
 
-  openSheet(){
-    this._bottomSheet.open(BetForm);
+  history():void {
+    this._router.navigate(['/bet/history'])
   }
 }

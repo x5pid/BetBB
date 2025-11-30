@@ -1,1 +1,22 @@
-<p>bet-me</p>
+<div class="container">
+    <div class="card">
+        <h3>Pari bébé (En cours)</h3>
+        <table>
+            <tr>
+              <th>Genre</th>
+              <th>Montant</th>
+              <th>Symbole</th>
+              <th>Date</th>
+            </tr>
+            @for (item of betMeData(); track $index) {
+                <tr>
+                    <td>{{item.gender}}</td>
+                    <td>{{item.amount}}</td>
+                    <td>{{item.symbolic_object}}</td>
+                    <td>{{item.datetime | date:'dd/MM/yyyy HH:mm'}}</td>
+                </tr>  
+            }
+                      
+          </table>
+    </div>
+</div>
