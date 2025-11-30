@@ -15,7 +15,7 @@
     width: 60%;
     @media (max-width: 768px) {
         width:auto;
-      }
+    }
 }
 
 /* MON PARI */
@@ -32,21 +32,34 @@
 
 
 /* BUTTONS */
-.btn {
-    display: inline-block;
-    padding: 12px 18px;
-    background: #4CAF50;
-    color: white;
-    text-align: center;
-    border-radius: 10px;
-    margin-top: 12px;
-    cursor: pointer;
-    border: none;
-    font-size: 1rem;
-}
-.btn:hover { background: #3e9a44; }
-
 .secondary {
     background: #6c7bff;
 }
 .secondary:hover { background: #5a69e6; }
+
+.btn-filled {
+    cursor: pointer;
+    border: none;
+    display: inline-block;
+    padding: 10px 50px;
+    background-color: #ff4d79; /* bleu Material */
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    position: relative; /* nécessaire pour positionner le point */
+}
+
+.btn-filled:hover {
+    background-color: #ff2f63; /* bleu plus foncé au survol */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+  
+.btn-filled:active {
+    background-color: #ff2f63; /* encore plus foncé au clic */
+    box-shadow: 0 2px 3px rgba(0,0,0,0.2);
+}

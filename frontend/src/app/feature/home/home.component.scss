@@ -141,5 +141,19 @@
   box-shadow: 0 2px 3px rgba(0,0,0,0.2);
 }
 
+.personnage {
+  position: absolute;
+  right: 6%;
+  bottom: 0px;
+  transform: translate(0%, 31%);
+  width: 40%;
 
+  @media (max-width: 768px) {
+    top: 86px;
+    transform: translate(0%, 0%);
+    width: 45%;
+    right: 2%;
+  }
+ 
+}
 
