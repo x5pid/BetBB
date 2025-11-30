@@ -8,6 +8,11 @@
   height: 100%;
   margin: 0 20px;
 
+  width: 60%;
+  @media (max-width: 768px) {
+    width:auto;
+  }
+
   header {
     display: flex;
     align-items: center;
@@ -27,8 +32,15 @@
   }
 
   .options {
-    @include flex-column;
-    gap: 12px;
+    display: flex;
+    gap: 20px;
+
+    @media (max-width: 768px) {
+      @include flex-column;
+      gap: 12px;
+      justify-content: normal;
+    }
+
     margin-top: 12px;
   }
 
@@ -106,10 +118,10 @@
 
   .chart {
     padding-right: 1rem;
-    height: 350px;
+    //height: 350px;
 
     canvas {
-      max-height: 400px;
+      max-height: 240px;
     }
   }
 
@@ -131,7 +143,7 @@
     margin-top: 10px;
   }
 }
-
+/*
 #opt-boy{
   position: relative;
 }
@@ -145,4 +157,4 @@
   color: var(--muted);
   line-height: 1.4;
   font-weight: 500;
-}
+}*/

@@ -1,5 +1,6 @@
 .bet-page {
-  background: linear-gradient(135deg, #ffe2ec, #dce7ff);
+  background: url('../../../../public/nubes.png'),linear-gradient(135deg, #ffe2ec, #dce7ff);
+  
   height: 100%;
 }
 
@@ -8,7 +9,7 @@
     align-items: center;
     justify-content: space-between;
     background: white;
-    padding: 15px 20px;
+    padding: 6px 20px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 
     &-left {

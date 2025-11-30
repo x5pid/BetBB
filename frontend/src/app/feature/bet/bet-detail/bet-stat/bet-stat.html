@@ -1,4 +1,4 @@
-<main class="card bet-stat" style=" width: 60%;margin: auto;margin-top: 20px;gap: 0;">
+<main class="card bet-stat" style="margin: auto;margin-top: 20px;gap: 0;">
   <header style="margin: 0;">
     <div class="logo">👶</div>
     <div>
@@ -9,66 +9,36 @@
 
   <div class="options">
     <!-- BOY -->
-    <div class="option" id="opt-boy">
-      <div class="icon" style="background:linear-gradient(135deg,#d6f0ff,#cfe9ff)">🍼</div>
+    <div class="option" id="opt-boy" style="padding: 5px 10px;flex: 1;">
+      <div class="icon" style="background:linear-gradient(135deg,#d6f0ff,#cfe9ff)">
+        <img src="tete-garcon.png" style="width: 30px;">
+      </div>
       <div class="meta">
         <div>Garçon</div>
-        <div class="small">Mises totales : <span id="total-boy">{{ totalBoy() }}</span></div>
+        <div class="small" style="font-size: 12px;">Mises totales : <span id="total-boy">{{ totalBoy() }}</span></div>
+        <div class="small" style="font-size: 12px;">Répartition : <span>{{ distributionBoy() }}%</span></div>
       </div>
       <div class="odds" id="odds-boy">{{ oddsBoy() | number:'1.2-2' }}x</div>
-    </div>
+    </div>    
     <!-- GIRL -->
-    <div class="option" id="opt-girl">
-      <div class="icon" style="background:linear-gradient(135deg,#ffd6e6,#ffdcec)">🧸</div>
+    <div class="option" id="opt-girl" style="padding: 5px 10px;flex: 1;">
+      <div class="icon" style="background:linear-gradient(135deg,#ffd6e6,#ffdcec)">
+        <img src="tete-fille.png" style="width: 30px;">
+      </div>
       <div class="meta">
         <div>Fille</div>
-        <div class="small">Mises totales : <span id="total-girl">{{ totalGirl() }}</span></div>
+        <div class="small" style="font-size: 12px;">Mises totales : <span id="total-girl">{{ totalGirl() }}</span></div>
+        <div class="small" style="font-size: 12px;">Répartition : <span>{{ distributionGirl() }}%</span></div>
       </div>
       <div class="odds" id="odds-girl">{{ oddsGirl() | number:'1.2-2' }}x</div>
     </div>
   </div>
-
-  <div class="stats">
-    <div class="stat">
-      <div class="small">Répartition</div>
-      <div class="distribution">
-        <div class="distribution-item">
-          <div class="distribution-header">
-            <div class="small">Garçon</div>
-              <div id="pct-boy">{{ distributionBoy() }}%</div>
-            </div>
-          <div class="progress-wrapper">
-            <div id="bar-boy" class="progress" #progressBarBoy></div>
-          </div>
-        </div>
-        <div class="spacer"></div>
-        <div class="distribution-item">
-          <div class="distribution-header">
-            <div class="small">Fille</div>
-            <div id="pct-girl">{{ distributionGirl() }}%</div>
-          </div>
-          <div class="progress-wrapper">
-            <div id="bar-girl" class="progress" #progressBarGirl></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="stat">
-      <div class="small">Mises totales</div>
-      <div class="value" id="total-stakes">{{total()}}</div>
-    </div>
-
-    <div class="stat">
-      <div class="small">Dernier pari</div>
-      <div class="value" id="last-bet">{{lastBet() || '—'}}</div>
-    </div>
-
-    <div class="stat">
-      <div class="small">Vos gains potentiels</div>
-      <div class="value" id="user-total-gains">{{potencial()}}</div>
-    </div>
-  </div>
+  <h1 style="font-size: 18px;
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-left: 10px;
+  margin-top: 14px;">Evolution de la cote</h1>
 
   <div class="chart">
     <canvas id="myChart"></canvas>
