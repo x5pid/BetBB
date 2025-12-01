@@ -134,3 +134,14 @@ body {
   }
 }
 
+app-bet-stat {
+  span.time-value {
+      font-size: 20px !important;
+      padding: 10px 0px 10px 10px !important;
+      letter-spacing: 10px !important;
+  }
+  span.time-label{
+      font-size: 10px !important;
+      margin-top: 1px !important;
+  }
+}

@@ -6,11 +6,17 @@
   gap: 12px;
   @include card;
   height: 100%;
-  margin: 0 20px;
-
+  padding: 12px;
   width: 60%;
+
+  margin: auto;
+  margin-top: 20px;
+  gap: 0;
+  padding-bottom: 5px;
+
   @media (max-width: 768px) {
     width:auto;
+    margin-top: 10px !important;
   }
 
   header {
