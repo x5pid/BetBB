@@ -1,4 +1,4 @@
-<main class="card bet-stat" style="margin: auto;margin-top: 20px;gap: 0;">
+<main class="card bet-stat" style="margin: auto;margin-top: 20px;gap: 0;padding-bottom: 5px;">
   <header style="margin: 0;">
     <div class="logo">👶</div>
     <div>
@@ -15,7 +15,7 @@
       </div>
       <div class="meta">
         <div>Garçon</div>
-        <div class="small" style="font-size: 12px;">Mises totales : <span id="total-boy">{{ totalBoy() }}</span></div>
+        <div class="small" style="font-size: 12px;">Mises totales : <span id="total-boy">{{ totalBoy() | number:'1.1-1'}}€</span></div>
         <div class="small" style="font-size: 12px;">Répartition : <span>{{ distributionBoy() }}%</span></div>
       </div>
       <div class="odds" id="odds-boy">{{ oddsBoy() | number:'1.2-2' }}x</div>
@@ -27,7 +27,7 @@
       </div>
       <div class="meta">
         <div>Fille</div>
-        <div class="small" style="font-size: 12px;">Mises totales : <span id="total-girl">{{ totalGirl() }}</span></div>
+        <div class="small" style="font-size: 12px;">Mises totales : <span id="total-girl">{{ totalGirl() | number:'1.1-1' }}€</span></div>
         <div class="small" style="font-size: 12px;">Répartition : <span>{{ distributionGirl() }}%</span></div>
       </div>
       <div class="odds" id="odds-girl">{{ oddsGirl() | number:'1.2-2' }}x</div>
@@ -38,7 +38,7 @@
   font-weight: 600;
   line-height: 1.2;
   margin-left: 10px;
-  margin-top: 14px;">Evolution de la cote</h1>
+  margin-top: 14px;">Évolution de la cote</h1>
 
   <div class="chart">
     <canvas id="myChart"></canvas>

@@ -5,18 +5,55 @@
     margin: auto;
     margin-top: 20px;padding: 18px;">
         <h3 style="font-size: 22px;margin: 0;font-weight: 600;line-height: 1.2;">Mon pari</h3>
-    
-        <div class="my-bet" id="myBetBox" style="display:none;">
-            <strong id="betText"></strong>
-            <br><br>
-            <button class="btn" (click)="openSheet()">Modifier mon pari</button>
-            <button class="btn secondary" onclick="location.href='mes-paris.html'">Voir l’historique</button>
-        </div>
-    
-        <div id="noBetBox">
-            <p>Tu n'as pas encore parié 😄</p>
-            <button class="btn-filled" (click)="openSheet()">Parier</button>
-        </div>
+        @if (isMyBet()) {
+
+            <div class="option" id="opt-boy" style="display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 5px 10px;
+            border-radius: 12px;
+            background: linear-gradient(180deg, var(--glass), transparent);
+            border: 1px solid rgb(241, 241, 242);
+            margin-top:5px;">
+                <div class="icon" style="background:linear-gradient(135deg,#d6f0ff,#cfe9ff);width: 44px;
+                height: 44px;
+                border-radius: 10px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 22px;
+            ">
+                @if (userGender() === 'Garçon') {
+                    <img src="tete-garcon.png" style="width: 30px;">
+                } @else {
+                    <img src="tete-fille.png" style="width: 30px;">
+                }
+                </div>
+                <div class="meta">
+                    <div style="font-weight: 500;">{{ userGender() }}</div>
+                </div>
+                <div class="meta" style="font-size: 14px;position: relative;flex: 1;text-align: center;font-weight: 500;">
+                    <span style="position: absolute;top: -37px;font-weight: 500;">Parié</span>
+                    <span id="total-boy">{{userAmount() | number:'1.1-1'}}€</span>
+                </div>
+                <div class="meta" style="font-size: 14px;position: relative;flex: 2;font-weight: 500;">
+                    <span style="position: absolute;top: -37px;font-weight: 500;">Gain potentiels</span>
+                    <span style="border: solid 3px #ff4d79;
+                    border-radius: 12px;
+                    padding: 3px 6px;">{{potencial()| number:'1.1-1'}}€</span>
+                </div>
+            </div>    
+
+            <div style="margin-top: 10px;">
+                <button class="btn-filled" style="padding: 6px 15px;font-size: 14px;" (click)="openSheet()">Modifier mon pari</button>
+                <button class="btn-filled" style="margin-left: 10px;padding: 6px 15px;font-size: 14px;" (click)="navigateToHistory()">Voir l’historique</button>
+            </div>            
+        } @else {
+            <div id="noBetBox">
+                <p>Tu n'as pas encore parié 😄</p>
+                <button class="btn-filled" (click)="openSheet()">Parier</button>
+            </div>
+        }   
     </div>
 </div>
 

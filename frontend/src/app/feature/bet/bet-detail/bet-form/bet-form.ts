@@ -12,14 +12,10 @@ import { FormComponent } from '../../../../shared/ui/form/form.component';
 @Component({
   selector: 'app-bet-form',
   imports: [
-    DecimalPipe,
     CoinDropDirective,
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
-    //CardComponent,
-    // ButtonComponent,
-    // InputComponent,
     FormComponent
   ],
   templateUrl: './bet-form.html',
