@@ -1,12 +1,12 @@
 <main class="card bet-stat" >
   <header style="margin: 0;">
-    <div class="logo">👶</div>
+    <div class="logo" id="svgpig">👶</div>
     <div style="display:flex;justify-content: space-between;width: 100%;align-items: center;">
       <div>
         <h1 style="font-size: 22px;margin: 0;font-weight: 600;line-height: 1.2;">Pariez : Garçon ou Fille</h1>
         <p class="lead">Pari symbolique.</p>
       </div>
-      
+
     </div>
   </header>
 
@@ -22,7 +22,7 @@
         <div class="small" style="font-size: 12px;">Répartition : <span>{{ distributionBoy() }}%</span></div>
       </div>
       <div class="odds" id="odds-boy">{{ oddsBoy() | number:'1.2-2' }}x</div>
-    </div>    
+    </div>
     <!-- GIRL -->
     <div class="option" id="opt-girl" style="padding: 5px 10px;flex: 1;">
       <div class="icon" style="background:linear-gradient(135deg,#ffd6e6,#ffdcec)">

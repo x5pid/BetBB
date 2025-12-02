@@ -33,7 +33,7 @@
     </div>
 
     <div class="betForm-actions" form-actions>
-      <button class="animation-zone" appCoinDrop [count]="10" [launch]="true" [jarId]="'svgpig'">Parier</button>
+      <button class="animation-zone" (click)="close()" appCoinDrop [count]="10" [launch]="true" [jarId]="'svgpig'">Parier</button>
     </div>
   </ui-form>
 </aside>
