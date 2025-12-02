@@ -6,3 +6,4 @@ SQLAlchemy
 python-multipart
 pydantic-settings
 pydantic[email]
+passlib[bcrypt]
