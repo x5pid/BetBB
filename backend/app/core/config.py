@@ -11,7 +11,8 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int  = 15
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7
     RESET_TOKEN_EXPIRE_MINUTES: int = 30
-    FRONTEND_ORIGINS: List[str] = ["http://localhost:4200"]
+    #FRONTEND_ORIGINS: List[str] = ["http://localhost:4200"]
+    FRONTEND_ORIGINS: List[str] = ["https://leafy-scone-9b40cb.netlify.app"]
 
     @field_validator("FRONTEND_ORIGINS", mode="before")
     @classmethod
