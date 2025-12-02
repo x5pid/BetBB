@@ -8,6 +8,8 @@ import { BetStat } from './bet-stat/bet-stat';
 import { BetService } from '../../../core/services/bet.service';
 import { DecimalPipe } from '@angular/common';
 import { Router } from '@angular/router';
+import { DeviceDetectorService } from '../../../core/services/device-detector.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-bet-detail',
@@ -23,6 +25,19 @@ export class BetDetail {
   private _bottomSheet = inject(MatBottomSheet);
   private _serviceBet = inject(BetService);
   private _router = inject(Router);
+  private _device = inject(DeviceDetectorService);
+  private _dialog = inject(MatDialog);
+
+  isMobile: boolean = false;
+  isTablet: boolean = false;
+  isDesktop: boolean = false;
+
+  ngOnInit(): void {
+    this.isMobile = this._device.isMobile();
+    this.isTablet = this._device.isTablet();
+    this.isDesktop = this._device.isDesktop();
+  }
+
   // Bet Stats
   private _betStats = this._serviceBet.betStats?.data;
   betStatsSuccess = this._serviceBet.betStats?.success;
@@ -66,8 +81,22 @@ export class BetDetail {
     return stats.gender;
   });
 
+  openDevice(){
+    if(this.isMobile)
+      this.openSheet();
+    else
+      this.openRulesDialog();
+  }
+
   openSheet(){
     this._bottomSheet.open(BetForm);
+  }
+
+  openRulesDialog(): void {
+    this._dialog.open(BetForm, {
+      width: '500px',
+      disableClose: false,
+    });
   }
 
   navigateToHistory(){

@@ -1,22 +1,36 @@
 <div class="container">
-    <div class="card">
-        <h3>Pari bébé (En cours)</h3>
-        <table>
-            <tr>
-              <th>Genre</th>
-              <th>Montant</th>
-              <th>Symbole</th>
-              <th>Date</th>
+
+  <div class="card" style="position: relative;margin-top: 60px;    padding: 11px 15px;">
+    <button class="btn-filled" (click)="navigateToBet()" style="padding: 3px 11px;
+      display: flex;
+      font-size: 14px;
+      align-items: center;
+      position: absolute;
+      top:-42px;
+      left:0;">
+        <mat-icon style="margin-right: 3px;">keyboard_backspace</mat-icon>
+        Retour au pari
+    </button>
+    <h3 style="font-size: 22px;margin: 0;font-weight: 600;line-height: 1.2;">Historique du pari</h3>
+    <table style="margin-bottom: 3px;">
+      <thead>
+        <tr>
+          <th>Genre</th>
+          <th>Montant</th>
+          <th>Symbole</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of betMeData(); track $index) {
+            <tr [class.trGirl]="item.gender == 'Fille'">
+                <td>{{item.gender}}</td>
+                <td>{{item.amount}}</td>
+                <td>{{item.symbolic_object}}</td>
+                <td>{{item.datetime | date:'dd/MM/yyyy HH:mm'}}</td>
             </tr>
-            @for (item of betMeData(); track $index) {
-                <tr>
-                    <td>{{item.gender}}</td>
-                    <td>{{item.amount}}</td>
-                    <td>{{item.symbolic_object}}</td>
-                    <td>{{item.datetime | date:'dd/MM/yyyy HH:mm'}}</td>
-                </tr>  
-            }
-                      
-          </table>
-    </div>
+        }
+      </tbody>
+    </table>
+  </div>
 </div>

@@ -1,7 +1,6 @@
 <div class="bet-detail">
     <app-bet-stat></app-bet-stat>
-    
-    <div class="card" style="    
+    <div class="card" style="
     margin: auto;
     margin-top: 20px;padding: 12px;">
         <h3 style="font-size: 22px;margin: 0;font-weight: 600;line-height: 1.2;">Mon pari</h3>
@@ -42,18 +41,23 @@
                     border-radius: 12px;
                     padding: 3px 6px;">{{potencial()| number:'1.1-1'}}€</span>
                 </div>
-            </div>    
+            </div>
 
             <div style="margin-top: 10px;">
-                <button class="btn-filled" style="padding: 6px 15px;font-size: 14px;" (click)="openSheet()">Modifier mon pari</button>
+                <button class="btn-filled" style="padding: 6px 15px;font-size: 14px;" (click)="openDevice()">Modifier mon pari</button>
                 <button class="btn-filled" style="margin-left: 10px;padding: 6px 15px;font-size: 14px;" (click)="navigateToHistory()">Voir l’historique</button>
-            </div>            
+            </div>
         } @else {
             <div id="noBetBox">
                 <p>Tu n'as pas encore parié 😄</p>
-                <button class="btn-filled" (click)="openSheet()">Parier</button>
+                <button class="btn-filled" (click)="openDevice()">Parier</button>
             </div>
-        }   
+        }
     </div>
 </div>
 
+<p>
+  Mobile {{isMobile}}<br/>
+  Tablet {{isTablet}}<br/>
+  Pc {{isDesktop}}<br/>
+</p>
