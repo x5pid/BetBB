@@ -1,19 +1,27 @@
-import { Directive, ElementRef, Input, Renderer2, HostListener, OnInit, AfterViewInit } from '@angular/core';
+import { Directive, ElementRef, Input, Renderer2, HostListener, OnInit, AfterViewInit, OnChanges, SimpleChanges, Signal, effect } from '@angular/core';
 
 @Directive({
   selector: '[appCoinDrop]'
 })
-export class CoinDropDirective implements OnInit, AfterViewInit {
+export class CoinDropDirective implements OnInit, AfterViewInit  {
   @Input() count = 0;  // Nombre de pièces
   @Input() launch = false;  // Lancer l'animation (à activer depuis le parent)
   @Input() jarId!: string;  // ID du jar pour la destination
 
+  @Input() actif?: Signal<boolean>;
+  
   private nextId = 0;
   private coins: { id: number, delay: string, translateX: string, translateY: string, endx :string,endy:string }[] = [];
 
   private jarElement: HTMLElement | null = null;  // Élément du jar (destinataire)
 
-  constructor(private el: ElementRef, private renderer: Renderer2) {}
+  constructor(private el: ElementRef, private renderer: Renderer2) {
+    effect(() => {
+      if (this.actif && this.actif()) {
+        this.onLaunch();
+      }
+    });
+  }
 
   ngOnInit() {
     if (!this.jarId) {
@@ -29,6 +37,7 @@ export class CoinDropDirective implements OnInit, AfterViewInit {
       console.error(`Le jar avec l'ID "${this.jarId}" n'a pas été trouvé.`);
     }
   }
+
 
   @HostListener('click')
   onClick() {

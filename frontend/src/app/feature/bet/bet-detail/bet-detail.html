@@ -44,13 +44,13 @@
             </div>
 
             <div style="margin-top: 10px;">
-                <button class="btn-filled" style="padding: 6px 15px;font-size: 14px;" (click)="openDevice()">Modifier mon pari</button>
+                <button class="btn-filled" style="padding: 6px 15px;font-size: 14px;" (click)="openDevice()" appCoinDrop [actif]="isActive" [count]="10" [jarId]="'svgpig'">Modifier mon pari</button>
                 <button class="btn-filled" style="margin-left: 10px;padding: 6px 15px;font-size: 14px;" (click)="navigateToHistory()">Voir l’historique</button>
             </div>
         } @else {
             <div id="noBetBox">
                 <p>Tu n'as pas encore parié 😄</p>
-                <button class="btn-filled" (click)="openDevice()">Parier</button>
+                <button class="btn-filled" (click)="openDevice()" appCoinDrop [actif]="isActive" [count]="10" [jarId]="'svgpig'">Parier</button>
             </div>
         }
     </div>

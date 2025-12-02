@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import {
   MatBottomSheet,
   MatBottomSheetModule,
@@ -10,6 +10,7 @@ import { DecimalPipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { DeviceDetectorService } from '../../../core/services/device-detector.service';
 import { MatDialog } from '@angular/material/dialog';
+import { CoinDropDirective } from './bet-form/coin-drop.directive';
 
 @Component({
   selector: 'app-bet-detail',
@@ -17,6 +18,7 @@ import { MatDialog } from '@angular/material/dialog';
     MatBottomSheetModule,
     BetStat,
     DecimalPipe,
+    CoinDropDirective
   ],
   templateUrl: './bet-detail.html',
   styleUrl: './bet-detail.scss'
@@ -28,6 +30,8 @@ export class BetDetail {
   private _device = inject(DeviceDetectorService);
   private _dialog = inject(MatDialog);
 
+  isActive = signal(false);
+  
   isMobile: boolean = false;
   isTablet: boolean = false;
   isDesktop: boolean = false;
@@ -93,9 +97,19 @@ export class BetDetail {
   }
 
   openRulesDialog(): void {
-    this._dialog.open(BetForm, {
+    const dialogRef = this._dialog.open(BetForm, {
       width: '500px',
       disableClose: false,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result === 'success'){
+        this.isActive.set(true);
+        
+        // ⏳ après 2 secondes, on remet à false
+        setTimeout(() => {
+          this.isActive.set(false);
+        }, 2000);      }
     });
   }
 

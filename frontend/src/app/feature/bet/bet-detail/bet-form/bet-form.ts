@@ -8,11 +8,11 @@ import { CardComponent } from '../../../../shared/ui/card/card.component';
 import { ButtonComponent } from '../../../../shared/ui/button/button.component';
 import { InputComponent } from '../../../../shared/ui/input/input.component';
 import { FormComponent } from '../../../../shared/ui/form/form.component';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-bet-form',
   imports: [
-    CoinDropDirective,
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
@@ -57,7 +57,7 @@ export class BetForm {
     symbolic_object: ['', [Validators.required]],
   });
 
-  constructor() {
+  constructor(private dialogRef: MatDialogRef<BetForm>) {
     effect(()=>{
       if(this._isGender()){
         const list = this.genders();
@@ -128,6 +128,7 @@ export class BetForm {
       };
 
       this._serviceBet.createBetMe(betRequest);
+      this.dialogRef.close('success');
     }
   }
 }
