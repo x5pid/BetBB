@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, input, signal } from '@angular/core';
+import { Component, computed, effect, inject, input, Optional, signal } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { CoinDropDirective } from './coin-drop.directive';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -9,6 +9,7 @@ import { ButtonComponent } from '../../../../shared/ui/button/button.component';
 import { InputComponent } from '../../../../shared/ui/input/input.component';
 import { FormComponent } from '../../../../shared/ui/form/form.component';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-bet-form',
@@ -57,7 +58,10 @@ export class BetForm {
     symbolic_object: ['', [Validators.required]],
   });
 
-  constructor(private dialogRef: MatDialogRef<BetForm>) {
+  constructor(
+    @Optional() private dialogRef?: MatDialogRef<BetForm>,
+    @Optional() private bottomSheetRef?: MatBottomSheetRef<BetForm>
+  ) {
     effect(()=>{
       if(this._isGender()){
         const list = this.genders();
@@ -128,7 +132,15 @@ export class BetForm {
       };
 
       this._serviceBet.createBetMe(betRequest);
+      this.close();
+    }
+  }
+
+  close(): void {
+    if (this.dialogRef) {
       this.dialogRef.close('success');
+    } else if (this.bottomSheetRef) {
+      this.bottomSheetRef.dismiss('success');
     }
   }
 }

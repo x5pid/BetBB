@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { DeviceDetectorService } from '../../../core/services/device-detector.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CoinDropDirective } from './bet-form/coin-drop.directive';
+import { Countdown } from '../../../shared/components/countdown/countdown';
 
 @Component({
   selector: 'app-bet-detail',
@@ -18,7 +19,8 @@ import { CoinDropDirective } from './bet-form/coin-drop.directive';
     MatBottomSheetModule,
     BetStat,
     DecimalPipe,
-    CoinDropDirective
+    CoinDropDirective,
+    Countdown,
   ],
   templateUrl: './bet-detail.html',
   styleUrl: './bet-detail.scss'

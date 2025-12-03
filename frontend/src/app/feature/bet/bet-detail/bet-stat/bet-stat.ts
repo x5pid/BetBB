@@ -4,13 +4,11 @@ import 'chartjs-adapter-date-fns'; // Importer l'adaptateur de date
 import { BetService } from '../../../../core/services/bet.service';
 import { BetDistribution, OddsSnapshot } from '../../../../core/models/bet.model';
 import { DecimalPipe } from '@angular/common';
-import { Countdown } from '../../../../shared/components/countdown/countdown';
 
 @Component({
   selector: 'app-bet-stat',
   imports: [
     DecimalPipe,
-    Countdown
   ],
   templateUrl: './bet-stat.html',
   styleUrl: './bet-stat.scss'

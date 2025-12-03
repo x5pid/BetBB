@@ -2,10 +2,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 80px;
-
+  
   background-image: url('../../../../public/back.png');
   background-size: contain;
+  @media (max-width: 768px) {
+    padding-top: 30px;
+  }
 
   height: 100%;
   justify-content: center;
@@ -17,8 +19,9 @@
   }
 
   &__title {
-    margin-bottom: 24px;
+    margin-bottom: 13px;
     text-align: center;
+    margin-top: 0;
   }
 
   &__field {

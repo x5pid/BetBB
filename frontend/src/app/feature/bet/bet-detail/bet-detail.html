@@ -1,5 +1,9 @@
 <div class="bet-detail">
     <app-bet-stat></app-bet-stat>
+    <div class="card bet-detail-countdown" style="margin: auto;margin-top: 20px;padding: 12px; display: flex;flex-direction: column;align-items: center;">
+        <h2 style="font-size: 21px;margin-top: 5px;margin-bottom: 5px;">GAME END IN</h2>
+        <app-countdown></app-countdown>
+    </div>
     <div class="card" style="
     margin: auto;
     margin-top: 20px;padding: 12px;">
@@ -35,8 +39,10 @@
                     <span style="position: absolute;top: -37px;font-weight: 500;">Parié</span>
                     <span id="total-boy">{{userAmount() | number:'1.1-1'}}€</span>
                 </div>
-                <div class="meta" style="font-size: 14px;position: relative;flex: 2;font-weight: 500;">
-                    <span style="position: absolute;top: -37px;font-weight: 500;">Gain potentiels</span>
+                <div class="meta potencial" style="font-size: 14px;position: relative;flex: 2;font-weight: 500;">
+                    <span style="position: absolute;top: -37px;font-weight: 500;transform: translate(-50%, 0%);
+                    left: 50%;
+                    white-space: nowrap;">Gain potentiels</span>
                     <span style="border: solid 3px #ff4d79;
                     border-radius: 12px;
                     padding: 3px 6px;">{{potencial()| number:'1.1-1'}}€</span>
