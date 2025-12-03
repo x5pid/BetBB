@@ -13,6 +13,7 @@ from app.schemas.bet import BetStatResponse, BetUserResponse, BetDistribution, O
 from sqlalchemy import func
 from app.db.models.gender import GenderEnum
 from datetime import timezone
+from sqlalchemy import func
 
 router = APIRouter()
 
@@ -96,7 +97,27 @@ async def delete_bet(bet_id: int, db: Session = Depends(get_db)):
 @router.get("/bets/stats", response_model=BetStatResponse)
 async def get_bets_stats(db: Session = Depends(get_db)):
     # Get all bets
-    bets = db.query(Bet).all()
+    #bets = db.query(Bet).all()
+
+    subquery = (
+        db.query(
+            Bet.user_id,
+            func.max(Bet.date).label("max_date")
+        )
+        .group_by(Bet.user_id)
+        .subquery()
+    )
+
+    bets = (
+        db.query(Bet)
+        .join(
+            subquery,
+            (Bet.user_id == subquery.c.user_id) &
+            (Bet.date == subquery.c.max_date)
+        )
+        .all()
+    )
+
     if not bets:
         # Si aucun bet, retourne des valeurs par défaut
         return BetStatResponse(
@@ -193,6 +214,13 @@ async def get_bets_stats(db: Session = Depends(get_db)):
 
 @router.get("/bets/user", response_model=BetUserResponse)
 async def get_user_bet_stats(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    last_bet = (db.query(Bet).filter(Bet.user_id == current_user.id).order_by(Bet.date.desc()).first())
+
+    return BetUserResponse(
+        amount=last_bet.amount,
+        gender=last_bet.gender
+    )
+
     user_bets = db.query(Bet).filter(Bet.user_id == current_user.id).all()
     if not user_bets:
         # Return default if no user bets
