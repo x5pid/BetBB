@@ -1,4 +1,7 @@
 .rules-dialog {
+  @media (max-width: 768px) {
+    min-width: 0;
+  }
   min-width: 400px;
   max-width: 500px;
 }

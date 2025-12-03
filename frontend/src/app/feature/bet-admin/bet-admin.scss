@@ -1,0 +1,78 @@
+.container{
+    @media (max-width: 768px) {
+       padding: 0 5px;
+     }
+ }
+ 
+ .card {
+     background: white;
+     padding: 20px;
+     border-radius: 15px;
+     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+ 
+     width: 60%;
+     margin: auto;
+     margin-top: 20px;
+ 
+     @media (max-width: 768px) {
+       width:auto;
+     }
+ }
+ 
+ 
+ table {
+   width: 100%;
+   border-collapse: collapse;
+   font-family: Arial, sans-serif;
+   margin: 20px 0;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   margin-top: 15px;
+ }
+ 
+ th, td {
+   padding: 10px 10px;
+   text-align: center;
+ }
+ 
+ th {
+   color: #ff4d79;
+   font-weight: bold;
+   text-transform: uppercase;
+ }
+ 
+ tbody tr.trGirl{
+     background-color: #fbe2ee;
+ }
+ // tbody tr {
+ //   background-color: #e2e6fc57;
+ // }
+ 
+ tr:hover {
+   background-color: #f1f1f1;
+ }
+ 
+ td {
+   border-bottom: 1px solid #ddd;
+ }
+ 
+ table tr:first-child th {
+   border-bottom: 2px solid #ff4d79;
+ }
+ 
+ .btn-filled {
+     cursor: pointer;
+     border: none;
+     display: inline-block;
+     padding: 10px 50px;
+     background-color: #ff4d79; /* bleu Material */
+     color: white;
+     font-family: Arial, sans-serif;
+     font-size: 15px;
+     font-weight: 700;
+     text-decoration: none;
+     border-radius: 20px;
+     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+     transition: background-color 0.3s ease, box-shadow 0.3s ease;
+     position: relative; /* nécessaire pour positionner le point */
+ }
+ 

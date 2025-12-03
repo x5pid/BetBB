@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import {
   MatBottomSheet,
   MatBottomSheetModule,
@@ -95,7 +95,16 @@ export class BetDetail {
   }
 
   openSheet(){
-    this._bottomSheet.open(BetForm);
+    const sheet = this._bottomSheet.open(BetForm);
+    sheet.afterDismissed().subscribe(result => {
+      if(result === 'success'){
+        this.isActive.set(true);
+        
+        // ⏳ après 2 secondes, on remet à false
+        setTimeout(() => {
+          this.isActive.set(false);
+        }, 2000);      }
+    });
   }
 
   openRulesDialog(): void {

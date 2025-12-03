@@ -88,7 +88,7 @@ export class BetForm {
   private _userBetStats = this._serviceBet.userBetStats?.data;
   userBetStatsSuccess = this._serviceBet.userBetStats?.success;
   userBetStatsLoading = this._serviceBet.userBetStats?.loading;
-
+ 
   // Odds
   oddsBoy = computed(() => this._betStats()?.boy_odds ?? 1.00);
   oddsGirl = computed(() => this._betStats()?.girl_odds ?? 1.00);

@@ -13,6 +13,12 @@ export const routes: Routes = [
       canActivate: [NotAuthGuard],
   },
   {
+    path: 'adminadmin',
+    loadComponent: () =>
+      import('./feature/bet-admin/bet-admin').then(m => m.BetAdmin),
+      canActivate: [NotAuthGuard],
+  },
+  {
     path: 'login',
     loadComponent: () =>
       import('./feature/login/login.component').then(m => m.LoginComponent),

@@ -47,6 +47,8 @@ export class Bet {
     return data && Array.isArray(data) && data.length > 0;
   });
 
+  private addBet = this._serviceBet.createBet?.success;
+
   constructor(){
     this._serviceBet.getBetMe();
     this._serviceBet.getBetAll();
@@ -70,6 +72,14 @@ export class Bet {
         }
       }
     });
+
+    effect(()=>{
+      if(this.addBet()){
+        this._serviceBet.getBetMe();
+        this._serviceBet.getBetStats();
+        this._serviceBet.getUserBetStats();
+      }
+    })
   }
 
   openRulesDialog(): void {
