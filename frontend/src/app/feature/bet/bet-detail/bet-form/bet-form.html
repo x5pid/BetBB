@@ -23,7 +23,7 @@
           }
         </select>
         <div style="position: relative;display: flex;">
-          <input style="flex:1" type="number" id="stake" min="1" [value]="userStake()" (input)="onStakeChange($event)" formControlName="amount" />
+          <input style="flex:1" type="number" id="stake" min="1" (input)="onStakeChange($event)" formControlName="amount" />
           <span class="suffix" style="position: absolute;right: 7px;top: 50%;transform: translateY(-50%);font-weight: 500;">€</span>
         </div>
       </div>

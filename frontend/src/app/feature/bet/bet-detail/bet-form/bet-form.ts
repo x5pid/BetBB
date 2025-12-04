@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, input, Optional, signal } from '@angular/core';
+import { Component, computed, effect, inject, input, OnInit, Optional, signal } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { CoinDropDirective } from './coin-drop.directive';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -22,7 +22,7 @@ import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
   templateUrl: './bet-form.html',
   styleUrl: './bet-form.scss'
 })
-export class BetForm {
+export class BetForm implements OnInit {
   private _serviceBet = inject(BetService);
   private _fb = inject(FormBuilder);
 
@@ -79,6 +79,14 @@ export class BetForm {
 
     this._serviceBet.getGender();
     this._serviceBet.getSymbolicObject();
+
+  }
+  ngOnInit(): void {
+    const val = this._userBetStats()?.amount;
+    if(val){
+      this.userStake.set(val);
+      this.form.controls['amount'].setValue(val);
+    }
   }
   // Bet Stats
   private _betStats = this._serviceBet.betStats?.data;
