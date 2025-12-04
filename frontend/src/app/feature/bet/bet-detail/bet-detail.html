@@ -5,7 +5,7 @@
         <h2 style="font-size: 21px;margin-top: 5px;margin-bottom: 5px;">GAME END IN</h2>
         <app-countdown></app-countdown>
     </div>
-    -->   
+    -->
 
     <div class="card" style="
     margin: auto;
@@ -21,7 +21,7 @@
             background: linear-gradient(180deg, var(--glass), transparent);
             border: 1px solid rgb(241, 241, 242);
             margin-top:5px;">
-                <div class="icon" style="background:linear-gradient(135deg,#d6f0ff,#cfe9ff);width: 44px;
+                <div class="icon girl" [class.boy]="userGender() === 'Garçon'" style="width: 44px;
                 height: 44px;
                 border-radius: 10px;
                 display: flex;

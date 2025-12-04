@@ -59,7 +59,7 @@
     background-color: #ff2f63; /* bleu plus foncé au survol */
     box-shadow: 0 4px 6px rgba(0,0,0,0.3);
 }
-  
+
 .btn-filled:active {
     background-color: #ff2f63; /* encore plus foncé au clic */
     box-shadow: 0 2px 3px rgba(0,0,0,0.2);
@@ -67,5 +67,13 @@
 
 .potencial {
         text-align: center;
-    
+
+}
+
+.boy {
+  background:linear-gradient(135deg,#d6f0ff,#cfe9ff) !important;
+}
+
+.girl {
+  background: linear-gradient(135deg, #ffd6e6, #ffdcec);
 }

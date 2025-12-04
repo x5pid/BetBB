@@ -10,6 +10,14 @@ class BetCreate(BaseModel):
     gender: GenderEnum
     symbolic_object: SymbolicObjectEnum
 
+class BetAllResponse(BaseModel):
+    id:int
+    user_id:int
+    datetime: datetime
+    amount: float
+    gender: GenderEnum
+    symbolic_object: SymbolicObjectEnum
+
 # Schema for responding with a bet (excluding user_id and id)
 class BetResponse(BaseModel):
     datetime: datetime

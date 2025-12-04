@@ -6,7 +6,7 @@ from datetime import date, datetime, time
 from sqlalchemy import exc
 
 from app.db.models.bet import Bet
-from app.schemas.bet import BetCreate, BetResponse
+from app.schemas.bet import BetAllResponse, BetCreate, BetResponse
 from app.db.models.user import User
 from app.core.bet import get_current_user
 from app.schemas.bet import BetStatResponse, BetUserResponse, BetDistribution, OddsSnapshot
@@ -45,13 +45,26 @@ async def create_bet(bet: BetCreate, db: Session = Depends(get_db), current_user
         raise HTTPException(status_code=500, detail="Database Error: Unable to add bet")
 
 # 2. Get a list of all bets excluding user_id and id
-@router.get("/bets", response_model=List[BetResponse])
+@router.get("/bets", response_model=List[BetAllResponse])
 async def get_all_bets(db: Session = Depends(get_db)):
     bets = db.query(Bet).all()
+    #users = db.query(User).all()
+
+    # Dictionnaire des users par id -> payload épuré
+    # users_by_id = {
+    #     u.id: {
+    #         "id": u.id,
+    #         "username": u.username,
+    #         "email": u.email,
+    #     }
+    #     for u in users
+    # }
 
     # Exclude user_id and id from the response
     response = [
         {
+            "id":bet.id,
+            "user_id":bet.user_id,
             "datetime": bet.date if isinstance(bet.date, datetime) else datetime.combine(bet.date, time.min),
             "amount": bet.amount,
             "gender": bet.gender,

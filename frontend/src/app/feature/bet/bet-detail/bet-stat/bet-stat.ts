@@ -158,7 +158,7 @@ export class BetStat implements AfterViewInit {
               beginAtZero: true,
               title: {
                 display: true,
-                text: 'Odds',
+                text: 'Cote',
               },
               grid: {
                 display: true,  // Afficher la grille des ordonnées
