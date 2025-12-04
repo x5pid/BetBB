@@ -8,7 +8,6 @@ import { Router } from '@angular/router';
   selector: 'app-bet-admin',
   imports: [
     DatePipe,
-    MatIcon,
   ],
   templateUrl: './bet-admin.html',
   styleUrl: './bet-admin.scss'

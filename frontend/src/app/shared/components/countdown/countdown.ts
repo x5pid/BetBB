@@ -15,7 +15,7 @@ export class Countdown implements OnInit, OnDestroy {
 
   // Date de fin des paris (à configurer ou récupérer depuis le backend)
   // Format: Date ISO string ou timestamp
-  private readonly endDate = new Date('2025-12-31T23:59:59').getTime();
+  private readonly endDate = new Date('2025-12-06T15:00:00').getTime();
 
   private intervalId?: number;
   private hasRedirected = false;

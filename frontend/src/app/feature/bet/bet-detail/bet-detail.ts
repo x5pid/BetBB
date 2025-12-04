@@ -20,7 +20,6 @@ import { Countdown } from '../../../shared/components/countdown/countdown';
     BetStat,
     DecimalPipe,
     CoinDropDirective,
-    Countdown,
   ],
   templateUrl: './bet-detail.html',
   styleUrl: './bet-detail.scss'
