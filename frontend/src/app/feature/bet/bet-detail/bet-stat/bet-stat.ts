@@ -2,7 +2,7 @@ import { AfterViewInit, Component, computed, effect, inject, signal, ViewChild }
 import { Chart, CategoryScale, LinearScale, Title, Tooltip, Legend, LineController, PointElement, LineElement, TimeScale, ScatterDataPoint } from 'chart.js'; // Importer les modules nécessaires
 import 'chartjs-adapter-date-fns'; // Importer l'adaptateur de date
 import { BetService } from '../../../../core/services/bet.service';
-import { BetDistribution, OddsSnapshot } from '../../../../core/models/bet.model';
+import { Bet, BetAll, BetDistribution, OddsSnapshot } from '../../../../core/models/bet.model';
 import { DecimalPipe } from '@angular/common';
 
 @Component({
@@ -26,6 +26,8 @@ export class BetStat implements AfterViewInit {
   private _userBetStats = this._serviceBet.userBetStats?.data;
   userBetStatsSuccess = this._serviceBet.userBetStats?.success;
   userBetStatsLoading = this._serviceBet.userBetStats?.loading;
+  //All
+  bets = this._serviceBet.bets?.data;
 
   //Distribution
   distributionBoy = computed(() =>
@@ -57,6 +59,66 @@ export class BetStat implements AfterViewInit {
     const amount = Number(stats.amount) || 0;
     const odds = stats.gender === 'Fille' ? this.oddsGirl() : this.oddsBoy();
     return amount * odds;
+  });
+
+  //Last Bet
+  latestBetsByUser = computed<BetAll[]>(() => {
+    const bets = this.bets();
+
+    if(!bets)
+      return [];
+
+    // Map user_id -> Bet le plus récent
+    const latestByUser = new Map<number, BetAll>();
+
+    for (const bet of bets) {
+      const existing = latestByUser.get(bet.user_id);
+
+      if (!existing) {
+        latestByUser.set(bet.user_id, bet);
+        continue;
+      }
+
+      // Comparaison par date (ISO -> Date)
+      const existingTime = Date.parse(existing.datetime);
+      const currentTime  = Date.parse(bet.datetime);
+
+      if (currentTime > existingTime) {
+        latestByUser.set(bet.user_id, bet);
+      }
+    }
+
+    // (Optionnel) Retour trié par datetime desc
+    return Array.from(latestByUser.values()).sort(
+      (a, b) => Date.parse(b.datetime) - Date.parse(a.datetime)
+    );
+  });
+
+  meansByGender = computed<{ girl: number; boy: number }>(() => {
+    const latest = this.latestBetsByUser();
+
+    if(latest.length == 0){
+      return { girl: 0, boy: 0 };
+    }
+
+    let girlSum = 0, girlCount = 0;
+    let boySum  = 0, boyCount  = 0;
+
+    for (const b of latest) {
+      const amount = b.amount ?? 0;
+      if (b.gender === 'Fille') {
+        girlSum += amount;
+        girlCount++;
+      } else if (b.gender === 'Garçon') {
+        boySum += amount;
+        boyCount++;
+      }
+    }
+
+    return {
+      girl: girlCount ? girlSum / girlCount : 0,
+      boy: boyCount ? boySum / boyCount : 0,
+    };
   });
 
   constructor() {

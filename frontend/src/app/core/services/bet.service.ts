@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { API_URL } from '../../tokens';
 import { RequestHandlerService } from './request-handler.service';
 import { Observable } from 'rxjs';
-import { Bet, BetStatResponse, BetUserResponse, CreateBetRequest } from '../models/bet.model';
+import { Bet, BetAll, BetStatResponse, BetUserResponse, CreateBetRequest } from '../models/bet.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class BetService {
   private readonly _bet = this._requestHandler.createRequestState<Bet[]>();
   bet = this._bet?.state;
 
-  private readonly _bets = this._requestHandler.createRequestState<Bet[]>();
+  private readonly _bets = this._requestHandler.createRequestState<BetAll[]>();
   bets = this._bets?.state;
 
   private readonly _createBet = this._requestHandler.createRequestState<Bet>();
@@ -47,7 +47,7 @@ export class BetService {
   }
 
   getBetAll() {
-    const req$ = this._http.get<Bet[]>(`${this._apiUrl}/bets`);
+    const req$ = this._http.get<BetAll[]>(`${this._apiUrl}/bets`);
     this._bets.run(req$);
   }
 
