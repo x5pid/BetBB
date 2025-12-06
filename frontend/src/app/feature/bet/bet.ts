@@ -9,6 +9,8 @@ import { Router, RouterOutlet } from '@angular/router';
 import { BetRulesDialog } from './bet-rules-dialog/bet-rules-dialog';
 import { AuthService } from '../../core/services/auth.service';
 import { TutorialService } from '../../core/services/tutorial.service';
+import { BetResult } from './bet-result/bet-result';
+import { CountDownService } from '../../core/services/countdown.service';
 
 
 @Component({
@@ -28,7 +30,10 @@ export class Bet {
   private _router = inject(Router);
   private _authService = inject(AuthService);
   private _tutorialService = inject(TutorialService);
+  private _countDownService = inject(CountDownService);
 
+  isEnDate = this._countDownService.isEnded;
+  private _countDownDialogOpened = false;
 
   private _rulesDialogOpened = false;
 
@@ -59,16 +64,24 @@ export class Bet {
     effect(() => {
       const loading = this.betMeLoading();
       const data = this.betMeData();
+      const isEndDate = this.isEnDate();
 
-      // Attendre que le chargement soit terminé et vérifier si l'utilisateur n'a pas joué
-      if (!loading && data !== undefined && !this._rulesDialogOpened) {
-        const hasPlayed = data && Array.isArray(data) && data.length > 0;
-        if (!hasPlayed) {
-          this._rulesDialogOpened = true;
-          // Petit délai pour éviter l'ouverture immédiate au chargement
-          setTimeout(() => {
-            this.openRulesDialog();
-          }, 500);
+      if(isEndDate && !this._countDownDialogOpened){
+        this._countDownDialogOpened = true;
+        setTimeout(() => {
+          this.openResult();
+        }, 500);
+      }else {
+        // Attendre que le chargement soit terminé et vérifier si l'utilisateur n'a pas joué
+        if (!loading && data !== undefined && !this._rulesDialogOpened) {
+          const hasPlayed = data && Array.isArray(data) && data.length > 0;
+          if (!hasPlayed) {
+            this._rulesDialogOpened = true;
+            // Petit délai pour éviter l'ouverture immédiate au chargement
+            setTimeout(() => {
+              this.openRulesDialog();
+            }, 500);
+          }
         }
       }
     });
@@ -76,6 +89,7 @@ export class Bet {
     effect(()=>{
       if(this.addBet()){
         this._serviceBet.getBetMe();
+        this._serviceBet.getBetAll();
         this._serviceBet.getBetStats();
         this._serviceBet.getUserBetStats();
       }
@@ -87,6 +101,14 @@ export class Bet {
       width: '500px',
       disableClose: false,
     });
+  }
+
+  openResult(): void {
+    const result = this._dialog.open(BetResult, {
+      width: '500px',
+      disableClose: false,
+    });
+    result.afterClosed().subscribe(()=> this._countDownDialogOpened = false);
   }
 
   logout(): void {

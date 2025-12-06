@@ -19,7 +19,7 @@
       <div class="meta">
         <div>Garçon</div>
         <div class="small" style="font-size: 12px;">Mises totales : <span id="total-boy">{{ totalBoy() | number:'1.1-1'}}€</span></div>
-        <div class="small" style="font-size: 12px;">Moyenne des mises: <span>{{ meansByGender().boy }}€</span></div>
+        <div class="small" style="font-size: 12px;">Moyenne des mises: <span>{{ meansByGender().boy | number:'1.2-2' }}€</span></div>
         <div class="small" style="font-size: 12px;">Répartition : <span>{{ distributionBoy() }}%</span></div>
       </div>
       <div class="odds" id="odds-boy">{{ oddsBoy() | number:'1.2-2' }}x</div>
@@ -32,7 +32,7 @@
       <div class="meta">
         <div>Fille</div>
         <div class="small" style="font-size: 12px;">Mises totales : <span id="total-girl">{{ totalGirl() | number:'1.1-1' }}€</span></div>
-        <div class="small" style="font-size: 12px;">Moyenne des mises: <span>{{ meansByGender().girl }}€</span></div>
+        <div class="small" style="font-size: 12px;">Moyenne des mises: <span>{{ meansByGender().girl | number:'1.2-2'}}€</span></div>
         <div class="small" style="font-size: 12px;">Répartition : <span>{{ distributionGirl() }}%</span></div>
       </div>
       <div class="odds" id="odds-girl">{{ oddsGirl() | number:'1.2-2' }}x</div>
