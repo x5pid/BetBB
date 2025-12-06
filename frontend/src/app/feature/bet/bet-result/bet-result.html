@@ -1,38 +1,44 @@
-<div class="bet-result-modal">
-  <div class="modal-content">
-    <div class="result-header">
-      <div class="icon-wrapper">
-        <mat-icon class="result-icon">celebration</mat-icon>
-        <div class="pulse-ring"></div>
-        <div class="pulse-ring delay-1"></div>
-        <div class="pulse-ring delay-2"></div>
+@if(userGenderGirl()){
+  <div class="bet-result-modal">
+    <div class="modal-content">
+      <div class="result-header">
+        <div class="icon-wrapper">
+          <mat-icon class="result-icon">celebration</mat-icon>
+          <div class="pulse-ring"></div>
+          <div class="pulse-ring delay-1"></div>
+          <div class="pulse-ring delay-2"></div>
+        </div>
       </div>
+      
+      <mat-dialog-content>
+        <div class="result-body">
+          <h2 class="result-title">Félicitations !</h2>
+          <p class="result-subtitle">Vous avez gagné</p>
+          <div class="result-image-container">
+            <img src="fille.png" alt="Victoire" class="result-image"/>
+            <div class="image-glow"></div>
+          </div>
+          <div class="confetti-container">
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+          </div>
+        </div>
+      </mat-dialog-content>
+      
+      <mat-dialog-actions>
+        <button mat-raised-button class="action-button" (click)="close()">
+          <mat-icon>check_circle</mat-icon>
+          <span>Compris</span>
+        </button>
+      </mat-dialog-actions>
     </div>
-    
-    <mat-dialog-content>
-      <div class="result-body">
-        <h2 class="result-title">Félicitations !</h2>
-        <p class="result-subtitle">Vous avez gagné</p>
-        <div class="result-image-container">
-          <img src="fille.png" alt="Victoire" class="result-image"/>
-          <div class="image-glow"></div>
-        </div>
-        <div class="confetti-container">
-          <div class="confetti"></div>
-          <div class="confetti"></div>
-          <div class="confetti"></div>
-          <div class="confetti"></div>
-          <div class="confetti"></div>
-        </div>
-      </div>
-    </mat-dialog-content>
-    
-    <mat-dialog-actions>
-      <button mat-raised-button class="action-button" (click)="close()">
-        <mat-icon>check_circle</mat-icon>
-        <span>Compris</span>
-      </button>
-    </mat-dialog-actions>
   </div>
-</div>
+}
+@else {
+  
+}
+
 
